@@ -20,9 +20,9 @@ public class ImmutableTree<T> extends ReflectionObject implements Tree<T> {
 	private final Node<T> root;
 	private TreeWalkStrategy walker;
 	
-	public ImmutableTree( TreeWalkStrategy walker, Node<T> root ) {
-		Preconditions.checkNotNull( this.walker = walker );
+	public ImmutableTree( Node<T> root, TreeWalkStrategy walker ) {
 		Preconditions.checkNotNull( this.root = root );
+		Preconditions.checkNotNull( this.walker = walker );
 	}
 
 	@Override
