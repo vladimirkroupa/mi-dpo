@@ -7,8 +7,7 @@ import org.junit.Test;
 
 import cz.cvut.fit.dpo.strategy.tree.DepthFirstTreeWalk;
 import cz.cvut.fit.dpo.strategy.tree.ImmutableTree;
-import cz.cvut.fit.dpo.strategy.tree.node.BinaryNode;
-import cz.cvut.fit.dpo.strategy.tree.node.BinaryNodeToNaryAdapter;
+import cz.cvut.fit.dpo.strategy.tree.node.ImmutableNode;
 import cz.cvut.fit.dpo.strategy.tree.node.Tree;
 
 public class TreePrinterTest {
@@ -30,15 +29,15 @@ public class TreePrinterTest {
 	public void asString() {
 		String expected = "1 2 3 4 5";
 		
-		BinaryNode<String> root = BinaryNode.builder( "1" )
-				.withLeft( BinaryNode.builder( "2" )
-						.withLeft( BinaryNode.builder( "3" )
-								.withRight( BinaryNode.builder( "4" ) )
+		ImmutableNode<String> root = ImmutableNode.builder( "1" )
+				.addChild( ImmutableNode.builder( "2" )
+						.addChild( ImmutableNode.builder( "3" )
+								.addChild( ImmutableNode.builder( "4" ) )
 						)
 				)		
-				.withRight( BinaryNode.builder( "5" ) )
+				.addChild( ImmutableNode.builder( "5" ) )
 				.build();
-		Tree<String> tree = new ImmutableTree<String>( new DepthFirstTreeWalk(), new BinaryNodeToNaryAdapter<String>( root ) );
+		Tree<String> tree = new ImmutableTree<String>( new DepthFirstTreeWalk(), root );
 		String actual = testObject.asString( tree );
 		
 		Assert.assertEquals( expected, actual ); 

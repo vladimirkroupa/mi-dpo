@@ -9,6 +9,13 @@ import cz.cvut.fit.dpo.strategy.tree.node.Node;
 import cz.cvut.fit.dpo.strategy.tree.node.Tree;
 import cz.cvut.fit.dpo.strategy.util.ReflectionObject;
 
+/**
+ * Immutable tree.
+ * 
+ * @param <T>
+ * 
+ * @author kroupvla
+ */
 public class ImmutableTree<T> extends ReflectionObject implements Tree<T> {
 
 	private final Node<T> root;

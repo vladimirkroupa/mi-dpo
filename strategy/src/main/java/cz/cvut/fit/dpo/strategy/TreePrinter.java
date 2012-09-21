@@ -5,8 +5,19 @@ import java.util.Iterator;
 import cz.cvut.fit.dpo.strategy.tree.node.Node;
 import cz.cvut.fit.dpo.strategy.tree.node.Tree;
 
+/**
+ * Tree printer using the {@link Iterator} supplied by the tree object.
+ * 
+ * @author kroupvla
+ */
 public class TreePrinter {
 	
+	/**
+	 * Prints {@link Tree}s as a single String using the tree's iterator. 
+	 * 
+	 * @param tree tree to print
+	 * @return String representation of this tree
+	 */
 	public <T> String asString( Tree<T> tree ) {
 		StringBuilder sb = new StringBuilder();
 		Iterator<Node<T>> iterator = tree.iterator();

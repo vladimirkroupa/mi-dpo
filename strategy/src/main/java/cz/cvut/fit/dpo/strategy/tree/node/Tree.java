@@ -3,7 +3,7 @@ package cz.cvut.fit.dpo.strategy.tree.node;
 import cz.cvut.fit.dpo.strategy.tree.TreeWalkStrategy;
 
 /**
- * N-ary tree.
+ * N-ary tree with changeable tree walk strategy.
  * 
  * @param <T> type of content held by tree nodes.
  * 

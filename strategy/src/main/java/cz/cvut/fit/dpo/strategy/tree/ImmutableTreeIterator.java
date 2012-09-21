@@ -7,7 +7,7 @@ import java.util.NoSuchElementException;
 import cz.cvut.fit.dpo.strategy.tree.node.Node;
 
 /**
- * {@link ImmutableTree} iterator for iterating trees. 
+ * Iterator for iterating immutable trees consisting of {@link Node}s. 
  * The structure of the tree must not change during the lifetime of this iterator. 
  * 
  * @param <T> type of node content
