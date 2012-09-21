@@ -7,8 +7,8 @@ import org.junit.Test;
 
 import cz.cvut.fit.dpo.strategy.tree.DepthFirstTreeWalk;
 import cz.cvut.fit.dpo.strategy.tree.ImmutableTree;
+import cz.cvut.fit.dpo.strategy.tree.Tree;
 import cz.cvut.fit.dpo.strategy.tree.node.ImmutableNode;
-import cz.cvut.fit.dpo.strategy.tree.node.Tree;
 
 public class TreePrinterTest {
 

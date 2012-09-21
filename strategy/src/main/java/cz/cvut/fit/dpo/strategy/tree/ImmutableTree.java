@@ -6,7 +6,6 @@ import java.util.List;
 import com.google.common.base.Preconditions;
 
 import cz.cvut.fit.dpo.strategy.tree.node.Node;
-import cz.cvut.fit.dpo.strategy.tree.node.Tree;
 import cz.cvut.fit.dpo.strategy.util.ReflectionObject;
 
 /**

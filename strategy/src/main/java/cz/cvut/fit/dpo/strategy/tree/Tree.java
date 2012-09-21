@@ -1,6 +1,6 @@
-package cz.cvut.fit.dpo.strategy.tree.node;
+package cz.cvut.fit.dpo.strategy.tree;
 
-import cz.cvut.fit.dpo.strategy.tree.TreeWalkStrategy;
+import cz.cvut.fit.dpo.strategy.tree.node.Node;
 
 /**
  * N-ary tree with changeable tree walk strategy.

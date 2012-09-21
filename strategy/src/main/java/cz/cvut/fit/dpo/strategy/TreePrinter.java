@@ -2,8 +2,8 @@ package cz.cvut.fit.dpo.strategy;
 
 import java.util.Iterator;
 
+import cz.cvut.fit.dpo.strategy.tree.Tree;
 import cz.cvut.fit.dpo.strategy.tree.node.Node;
-import cz.cvut.fit.dpo.strategy.tree.node.Tree;
 
 /**
  * Tree printer using the {@link Iterator} supplied by the tree object.
