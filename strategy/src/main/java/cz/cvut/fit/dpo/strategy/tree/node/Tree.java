@@ -9,7 +9,7 @@ import cz.cvut.fit.dpo.strategy.tree.TreeWalkStrategy;
  * 
  * @author kroupvla
  */
-public interface ITree<T> extends Iterable<INode<T>> {
+public interface Tree<T> extends Iterable<Node<T>> {
 
 	/**
 	 * Sets the tree walking strategy.

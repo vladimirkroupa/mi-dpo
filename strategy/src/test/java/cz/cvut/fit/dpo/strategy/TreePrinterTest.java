@@ -6,10 +6,10 @@ import org.junit.Before;
 import org.junit.Test;
 
 import cz.cvut.fit.dpo.strategy.tree.DepthFirstTreeWalk;
-import cz.cvut.fit.dpo.strategy.tree.Tree;
+import cz.cvut.fit.dpo.strategy.tree.ImmutableTree;
 import cz.cvut.fit.dpo.strategy.tree.node.BinaryNode;
 import cz.cvut.fit.dpo.strategy.tree.node.BinaryNodeToNaryAdapter;
-import cz.cvut.fit.dpo.strategy.tree.node.ITree;
+import cz.cvut.fit.dpo.strategy.tree.node.Tree;
 
 public class TreePrinterTest {
 
@@ -38,7 +38,7 @@ public class TreePrinterTest {
 				)		
 				.withRight( BinaryNode.builder( "5" ) )
 				.build();
-		ITree<String> tree = new Tree<String>( new DepthFirstTreeWalk(), new BinaryNodeToNaryAdapter<String>( root ) );
+		Tree<String> tree = new ImmutableTree<String>( new DepthFirstTreeWalk(), new BinaryNodeToNaryAdapter<String>( root ) );
 		String actual = testObject.asString( tree );
 		
 		Assert.assertEquals( expected, actual ); 

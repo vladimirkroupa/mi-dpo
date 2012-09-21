@@ -9,7 +9,7 @@ import java.util.NoSuchElementException;
  * 
  * @author kroupvla
  */
-public interface INode<T> {
+public interface Node<T> {
 
 	/**
 	 * @return content of the node
@@ -32,7 +32,7 @@ public interface INode<T> {
 	 * @return the n-th child node
 	 * @throws NoSuchElementException if node doesn't contain node with the required index.
 	 */
-	INode<T> child( int index );
+	Node<T> child( int index );
 
 	/**
 	 * @return number of child nodes.      

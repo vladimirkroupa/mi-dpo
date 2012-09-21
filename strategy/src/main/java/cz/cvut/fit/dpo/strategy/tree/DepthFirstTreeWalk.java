@@ -7,25 +7,25 @@ import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 
-import cz.cvut.fit.dpo.strategy.tree.node.INode;
+import cz.cvut.fit.dpo.strategy.tree.node.Node;
 
 public class DepthFirstTreeWalk implements TreeWalkStrategy {
 
-	private Set<INode<?>> visited;
+	private Set<Node<?>> visited;
 
 	@Override
-	public <T> List<INode<T>> prepareNodesForVisit( INode<T> root ) {
+	public <T> List<Node<T>> prepareNodesForVisit( Node<T> root ) {
 		Preconditions.checkNotNull( root );
 		initVisited();
 
-		final List<INode<T>> nodes = Lists.newArrayList();
+		final List<Node<T>> nodes = Lists.newArrayList();
 		collectPreOrder( nodes, root );
 		
 		discardVisited();
 		return nodes;
 	}
 
-	private <T> void collectPreOrder( List<INode<T>> list, INode<T> actual ) {
+	private <T> void collectPreOrder( List<Node<T>> list, Node<T> actual ) {
 		assert( actual != null );
 		
 		if ( detectCycle( actual ) ) {
@@ -47,7 +47,7 @@ public class DepthFirstTreeWalk implements TreeWalkStrategy {
 		this.visited = null;
 	}
 	
-	private <T> boolean detectCycle( INode<T> node ) {
+	private <T> boolean detectCycle( Node<T> node ) {
 		if ( visited.contains( node ) ) {
 			return true;
 		}
