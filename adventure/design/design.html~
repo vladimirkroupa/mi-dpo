@@ -1,0 +1,29 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+	<head>
+		<title>Adventure game - Vladimír Kroupa</title>
+		<meta http-equiv="content-type" content="text/html;charset=utf-8" />
+	</head>
+	<body>
+		<h1>Návrh textové adventury</h1>
+		<h2>Architektura</h2>
+		<p>Použiji architektonický vzor MVC.</p>
+		<img src="./architecture.png" />
+		<h3>View</h3>
+		<p>Reprezentuje konzolové UI. Stará se o rozpoznávání příkazů od uživatele a rozpoznané příkazy deleguje na Controller. Pomocí vzoru <strong>Observer</strong> je zaregistrován jako posluchač událostí z Modelu (rozhraní <code>GameEventObserver</code>). Předpokládám zatím herní událost (metoda <code>gameEventOccured(GameEvent e)</code>, kterou View obslouží tak, že pouze vypíše další řádek na výstup (např: "Trpaslík odešel z místnosti."). Je také možné, že by mohly nastávat zásadní změny stavu hry, které by vyžadovaly kompletní překreslení UI (např: "Probořila se pod tebou podlaha a propadl jsi se do sklepa." - změna lokace bez toho, aby to hráč vyžádal). Potom by se rozhraní GameEventObserver rozšířilo o novou metodu (např: <code>repaintNeeded()</code>).</p>
+		<p>View má také přímou vazbu na Model, protože se ho dotazuje na stav hry, který potom vypisuje na konzoli. (např: <code>currentLocation()</code> pro získání aktuální lokace).</p>
+		<h3>Controller</h3>
+		<p>Stará se o zpracování příkazů od uživatele, které mu jsou předpřipraveny (zparsovány) View. Samotné vykonávání příkazů deleguje na Model. Zatím nepředpokládám, že bude potřeba, aby Controller měl vazbu na View, ať už přes Observer, nebo přímo. Je možné, že tato potřeba vyvstane později.</p>
+		<h3>Model</h3>
+		<p>Model představuje veškerou "business logiku aplikace" a nemá přímo o existenci View ani Controlleru.</p>
+		<p>Doménový model bude zapouzdřen za fasádou. Ta by mohla zpřístupňovat přímo některé operace, které by jinak bylo nutné vyvolávat způsobem porušujícím princip <strong>LoD</strong>. Fasáda modelu by mohla například zveřejnit metodu <code>List&lt;GameObject&gt; objectsInCurrentLocation()</code>. Bez této metody by bylo nutné provést sekvenci volání např: <code>currentLocation().itemsPresent()</code>.</p>
+		<h2>Návrh doménového modelu</h2>
+		<p>Hlavní abstrakcí hry bude <code>GameObject</code> - třída, reprezentující objekt ve hře. Toto rozhraní bude obsahovat metody, které budou reagovat na možné hráčovy akce - seber předmět, manipuluj s předmětem, apod. Protože způsob reakce na povely bude u mnoha předmětů stejný, mohl bych toto chování zapouzdřit do vzoru <strong>Strategy</strong>. <code>GameObject</code> by pak mohl na Strategy objekty delegovat svoje reakce na hráčovy akce. Například <code>PickupStrategy</code> by definovala, jak předmět reaguje na pokus o zvednutí. <code>ImmovablePickupStrategy</code> by na každý pokus o zvednutí vytvořila událost pro View oznamující hráči, že předmět je příliš těžký. Otázka je, jestli se v tomto případě nejedná spíš o vzor <code>State</code>, protože objekt <code>GameObject</code> nebude umožňovat svým klientům své Strategy měnit a naopak by je mohl sám na sobě vyměnit po provedení nějaké akce.</p>
+		<p>Herní místnosti (lokace) budou reprezentovány samostatným objektem <code>Location</code>, protože narozdíl od <code>GameObject</code> na nich nepůjde vyvolávat povely, slouží pouze jako kontejner na herní objekty.</p>
+		<p>Předpokládám také existenci globálního objektu <code>Game</code>, kde by se držel mimo jiné hráčův inventář a mohly by zde být pomocné metody, například pro vyvolání herní akce (které poslouchá View).</p>
+		<img src="./domainmodel.png" />
+
+	</body>
+</html>
+
+ 
