@@ -1,6 +1,5 @@
 package cz.cvut.fit.dpo.adventure.model;
 
-import cz.cvut.fit.dpo.adventure.domain.Location;
 import cz.cvut.fit.dpo.adventure.model.strategy.ExamineStrategy;
 import cz.cvut.fit.dpo.adventure.model.strategy.ManipulateStrategy;
 import cz.cvut.fit.dpo.adventure.model.strategy.PickupStrategy;
