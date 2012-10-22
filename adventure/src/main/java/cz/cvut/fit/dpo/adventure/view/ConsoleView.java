@@ -2,14 +2,14 @@ package cz.cvut.fit.dpo.adventure.view;
 
 import java.io.PrintStream;
 
-import cz.cvut.fit.dpo.adventure.model.GameFacade;
 import cz.cvut.fit.dpo.adventure.model.GameObject;
 import cz.cvut.fit.dpo.adventure.model.ILocation;
+import cz.cvut.fit.dpo.adventure.model.facade.GameModelFacade;
 import cz.cvut.fit.dpo.adventure.model.observer.IGameEvent;
 
 public class ConsoleView implements GameView {
 
-	private GameFacade model;
+	private GameModelFacade model;
 	
 	private PrintStream out;
 	private boolean exit;

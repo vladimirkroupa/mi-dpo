@@ -1,53 +1,71 @@
 package cz.cvut.fit.dpo.adventure.controller;
 
-import cz.cvut.fit.dpo.adventure.model.GameFacade;
 import cz.cvut.fit.dpo.adventure.model.GameObject;
-import cz.cvut.fit.dpo.adventure.model.Location;
+import cz.cvut.fit.dpo.adventure.model.ILocation;
+import cz.cvut.fit.dpo.adventure.model.command.DropCommand;
+import cz.cvut.fit.dpo.adventure.model.command.ExamineCommand;
 import cz.cvut.fit.dpo.adventure.model.command.IGameCommand;
 import cz.cvut.fit.dpo.adventure.model.command.MoveToLocationCommand;
-import cz.cvut.fit.dpo.adventure.model.observer.ErrorEvent;
+import cz.cvut.fit.dpo.adventure.model.command.PickUpCommand;
+import cz.cvut.fit.dpo.adventure.model.command.UseOnCommand;
+import cz.cvut.fit.dpo.adventure.model.facade.GameModelFacade;
+import cz.cvut.fit.dpo.adventure.model.facade.GameModelSpiFacade;
 import cz.cvut.fit.dpo.adventure.model.observer.GameEventObserver;
 
 public class GameController implements IGameController {
 
-	private final GameFacade gameFacade;
-	private final GameEventObserver gameView;
+	private final GameModelFacade gameFacade;
+	private final GameModelSpiFacade gameSpiFacade;
 	
-	public GameController(GameFacade gameFacade, GameEventObserver gameView) {
+	public GameController(GameModelFacade gameFacade, GameModelSpiFacade gameSpiFacade, GameEventObserver gameView) {
 		this.gameFacade = gameFacade;
-		this.gameView = gameView;
+		this.gameSpiFacade = gameSpiFacade;
 	}
 
 	@Override
 	public void examine(String item) {
-		GameObject object = findGameObject(item);
+		GameObject object = gameFacade.findGameObject(item);
 		if (object != null) {
-			object.describe();
+			IGameCommand examine = new ExamineCommand(gameSpiFacade.getGameState(), object);
+			gameFacade.acceptCommand(examine);
 		}
 	}
 
 	@Override
 	public void exitTo(String location) {
-		Location exit = findExit(location);
+		ILocation exit = gameFacade.findExit(location);
 		if (exit != null) {
-			IGameCommand moveTo = new MoveToLocationCommand(gameFacade.gameState(), exit);
+			IGameCommand moveTo = new MoveToLocationCommand(gameSpiFacade.getGameState(), exit);
 			gameFacade.acceptCommand(moveTo);
 		}
 	}
 
 	@Override
 	public void pickUp(String item) {
-		// TODO Auto-generated method stub
+		GameObject object = gameFacade.findGameObject(item);
+		if (object != null) {
+			IGameCommand pickup = new PickUpCommand(gameSpiFacade.getGameState(), object);
+			gameFacade.acceptCommand(pickup);
+		}
 	}
 
 	@Override
 	public void drop(String item) {
-		// TODO Auto-generated method stub
+		GameObject object = gameFacade.findGameObject(item);
+		if (object != null) {
+			IGameCommand drop = new DropCommand(gameSpiFacade.getGameState(), object);
+			gameFacade.acceptCommand(drop);
+		}
 	}
 
 	@Override
 	public void useOn(String what, String on) {
-		// TODO Auto-generated method stub
+		GameObject object = gameFacade.findGameObject(what);
+		GameObject target = gameFacade.findGameObject(on);
+		if (object != null) {
+			IGameCommand useOn = new UseOnCommand(gameSpiFacade.getGameState(), object, target);
+			gameFacade.acceptCommand(useOn);
+		}
 	}
 
 	@Override
@@ -60,25 +78,5 @@ public class GameController implements IGameController {
 		// TODO Auto-generated method stub
 	}
 
-	private GameObject findGameObject(String name) {
-		GameObject gameObject = gameFacade.findGameObject(name);
-		if (gameObject == null) {
-			unknownEntity(name);
-		}
-		return gameObject;
-	}
-	
-	private Location findExit(String name) {
-		Location location = gameFacade.findExit(name);
-		if (location == null) {
-			unknownEntity(name);
-		}
-		return location;
-	}
-	
-	private void unknownEntity(String name) {
-		ErrorEvent event = new ErrorEvent("There is no " + "\"name\"" + " here.");
-		gameView.gameEventOccured(event);
-	}
 	
 }
