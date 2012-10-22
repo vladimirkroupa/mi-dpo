@@ -18,7 +18,7 @@ public class ImmovablePickupStrategy implements PickupStrategy {
 	public void pickUp(GameObject object) {
 		String message = object.name() + " cannot be picked up. ";
 		message += reasonForImmovability;
-		Game.getInstance().createEvent(message);
+		GameState.getInstance().createEvent(message);
 	}
 	
 }

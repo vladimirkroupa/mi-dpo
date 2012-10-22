@@ -4,8 +4,8 @@ import java.io.PrintStream;
 
 import cz.cvut.fit.dpo.adventure.model.GameFacade;
 import cz.cvut.fit.dpo.adventure.model.GameObject;
-import cz.cvut.fit.dpo.adventure.model.Location;
-import cz.cvut.fit.dpo.adventure.model.observer.GameEvent;
+import cz.cvut.fit.dpo.adventure.model.ILocation;
+import cz.cvut.fit.dpo.adventure.model.observer.IGameEvent;
 
 public class ConsoleView implements GameView {
 
@@ -23,8 +23,9 @@ public class ConsoleView implements GameView {
 	}
 	
 	@Override
-	public void gameEventOccured(GameEvent event) {
+	public void gameEventOccured(IGameEvent event) {
 		out.println(event.decsription());
+		out.println();
 	}
 
 	@Override
@@ -55,7 +56,7 @@ public class ConsoleView implements GameView {
 	
 	void printExits() {
 		out.print("From here, you can go to: ");
-		for (Location exit : model.currentLocation().exitBy()) {
+		for (ILocation exit : model.currentLocation().exits()) {
 			out.print(exit.name());
 			out.print(", ");
 		}

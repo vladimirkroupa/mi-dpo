@@ -53,7 +53,7 @@ public class DelegatingObject implements GameObject {
 	}
 
 	@Override
-	public Location location() {
+	public ILocation location() {
 		// TODO Auto-generated method stub
 		return null;
 	}
