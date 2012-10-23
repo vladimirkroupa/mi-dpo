@@ -1,4 +1,4 @@
-package cz.cvut.fit.dpo.adventure.controller;
+package cz.cvut.fit.dpo.adventure.integration;
 
 import junit.framework.Assert;
 
@@ -37,6 +37,5 @@ public class GameIntegrationTest {
 		
 		Assert.assertTrue(model.checkWinningState());
 	}
-	
 	
 }

@@ -35,10 +35,15 @@ public class Location implements ILocation, IContainer {
 	public String describe() {
 		return descriptions.describe();
 	}
+	
+	@Override
+	public boolean contains(String itemName) {
+		return container.contains(itemName);
+	}
 
 	@Override
 	public List<IGameObject> objectsHere() {
-		return content();
+		return Collections.unmodifiableList(container.content());
 	}
 
 	@Override

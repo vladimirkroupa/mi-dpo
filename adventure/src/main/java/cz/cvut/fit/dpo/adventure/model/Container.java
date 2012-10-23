@@ -33,4 +33,14 @@ public class Container implements IContainer {
 		return Collections.unmodifiableList(items);
 	}
 
+	@Override
+	public boolean contains(String itemName) {
+		for (IGameObject object : content()) {
+			if (object.name().equals(itemName)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 }

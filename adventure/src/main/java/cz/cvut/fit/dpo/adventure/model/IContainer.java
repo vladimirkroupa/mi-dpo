@@ -10,6 +10,8 @@ public interface IContainer {
 	
 	void destroy(IGameObject item);
 	
+	boolean contains(String itemName);
+	
 	List<IGameObject> content();
 	
 }
