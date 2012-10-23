@@ -10,12 +10,15 @@ public class CommandParser {
 	static final String USE_ON = "use";
 	// TODO manipulate
 	
+	static final String LOOK_AROUND = "status";
+	
 	static final String HELP = "help";
 	static final String QUIT = "quit";
 	
 	public static boolean isNullaryCommand(String command) {
 		return (command.startsWith(HELP) ||
-				command.startsWith(QUIT));
+				command.startsWith(QUIT) ||
+				command.startsWith(LOOK_AROUND));
 	}
 	
 	public static boolean isUnaryCommand(String command) {

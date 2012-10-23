@@ -1,6 +1,8 @@
 apply plugin: 'java'
 apply plugin: 'eclipse'
 
+mainClassName = "cz.cvut.fit.dpo.adventure.Main"
+
 [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
 
 repositories {

@@ -10,16 +10,23 @@ import cz.cvut.fit.dpo.adventure.model.command.PickUpCommand;
 import cz.cvut.fit.dpo.adventure.model.command.UseOnCommand;
 import cz.cvut.fit.dpo.adventure.model.facade.GameModelFacade;
 import cz.cvut.fit.dpo.adventure.model.facade.GameModelSpiFacade;
-import cz.cvut.fit.dpo.adventure.model.observer.GameEventObserver;
+import cz.cvut.fit.dpo.adventure.model.observer.GameEvent;
+import cz.cvut.fit.dpo.adventure.view.ConsoleView;
+import cz.cvut.fit.dpo.adventure.view.GameView;
 
 public class GameController implements IGameController {
 
 	private final GameModelFacade gameFacade;
 	private final GameModelSpiFacade gameSpiFacade;
+	private GameView view;
 	
-	public GameController(GameModelFacade gameFacade, GameModelSpiFacade gameSpiFacade, GameEventObserver gameView) {
+	public GameController(GameModelFacade gameFacade, GameModelSpiFacade gameSpiFacade) {
 		this.gameFacade = gameFacade;
 		this.gameSpiFacade = gameSpiFacade;
+	}
+	
+	public void setView(GameView view) {
+		this.view = view;
 	}
 
 	@Override
@@ -69,14 +76,14 @@ public class GameController implements IGameController {
 	}
 
 	@Override
-	public void newGame() {
-		// TODO Auto-generated method stub
+	public void lookAround() {
+		//TODO: odstranit hack
+		((ConsoleView)view).gameEventOccured(GameEvent.updateLocationEvent());
 	}
 
 	@Override
 	public void exitGame() {
-		// TODO Auto-generated method stub
+		view.exitGame();
 	}
-
 	
 }

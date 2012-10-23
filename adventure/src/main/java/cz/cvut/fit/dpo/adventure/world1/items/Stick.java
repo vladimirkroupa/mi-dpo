@@ -1,4 +1,4 @@
-package cz.cvut.fit.dpo.adventure.world1;
+package cz.cvut.fit.dpo.adventure.world1.items;
 
 import cz.cvut.fit.dpo.adventure.model.IGameObject;
 import cz.cvut.fit.dpo.adventure.model.builder.WorldDefinition;
@@ -10,7 +10,7 @@ import cz.cvut.fit.dpo.adventure.model.strategy.useon.MapUseOnStrategy;
 
 public class Stick extends DelegatingGameObject {
 
-	private static final String DESCRIPTION = "You see a stick.";
+	private static final String DESCRIPTION = "You see an ordinary wooden stick.";
 	
 	public Stick(WorldDefinition world) {
 		super("stick");

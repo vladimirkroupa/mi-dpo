@@ -6,4 +6,6 @@ public interface GameView extends GameEventObserver {
 
 	void parseCommand(String command);
 	
+	void exitGame();
+	
 }

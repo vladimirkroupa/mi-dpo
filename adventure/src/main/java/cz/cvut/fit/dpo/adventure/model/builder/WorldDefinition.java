@@ -12,4 +12,6 @@ public interface WorldDefinition extends InteractionRepository {
 	
 	List<IGameObject> initialInventory();
 	
+	IGameObject findItem(String name);
+	
 }

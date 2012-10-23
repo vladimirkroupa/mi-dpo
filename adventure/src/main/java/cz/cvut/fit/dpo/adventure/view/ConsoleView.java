@@ -1,5 +1,8 @@
 package cz.cvut.fit.dpo.adventure.view;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.PrintStream;
 
 import cz.cvut.fit.dpo.adventure.controller.IGameController;
@@ -13,6 +16,7 @@ public class ConsoleView implements GameView {
 	private GameModelFacade model;
 	private IGameController controller;
 	
+	private BufferedReader reader;
 	private PrintStream out;
 	private boolean exit;
 
@@ -20,15 +24,19 @@ public class ConsoleView implements GameView {
 		this.model = model;
 		this.controller = controller;
 		this.out = System.out;
-		exit = false;
+		this.reader = new BufferedReader(new InputStreamReader(System.in));
+		this.exit = false;
 	}
 
-	public void run() {
-		String command;
+	public void run() throws IOException {
+		printCurrentState();
+		String command = null;
 		while (! exit) {
-			command = System.console().readLine();
+			command = reader.readLine();
 			parseCommand(command);
 		}
+		out.println("Bye!");
+		reader.close();
 	}
 	
 	@Override
@@ -43,14 +51,19 @@ public class ConsoleView implements GameView {
 	@Override
 	public void parseCommand(String command) {
 		String[] words = command.split(" ");
+
 		if (CommandParser.isNullaryCommand(command)) {
-			//switch words[0]:
-				
-		}
-		if (CommandParser.isUnaryCommand(command)) {
+			// check argument count
+			String action = words[0];
+			if (action.startsWith(CommandParser.QUIT)) {
+				controller.exitGame();
+			} else if (action.startsWith(CommandParser.LOOK_AROUND)) {
+				controller.lookAround();
+			}
+		} else if (CommandParser.isUnaryCommand(command)) {
+			// check argument count
 			String action = words[0];
 			String param = words[1];
-			// check argument count
 			if (action.startsWith(CommandParser.EXAMINE)) {
 				controller.examine(param);
 			} else if (action.startsWith(CommandParser.EXIT_TO)) {
@@ -60,14 +73,16 @@ public class ConsoleView implements GameView {
 			} else if (action.startsWith(CommandParser.DROP)) {
 				controller.drop(param);
 			}
-		}
-		if (CommandParser.isBinaryCommand(command)) {
+		} else if (CommandParser.isBinaryCommand(command)) {
+			// check argument count
 			String action = words[0];
 			String param1 = words[1];
 			String param2 = words[2];
 			if (action.startsWith(CommandParser.USE_ON)) {
 				controller.useOn(param1, param2);
 			}
+		} else {
+			out.println("Uknown command.");
 		}
 	}
 	
@@ -78,7 +93,6 @@ public class ConsoleView implements GameView {
 	}
 	
 	void printLocation() {
-		out.println("You are standing in " + model.currentLocation().name());
 		out.println(model.currentLocation().describe());
 		out.println();
 	}
@@ -99,6 +113,11 @@ public class ConsoleView implements GameView {
 			out.print(", ");
 		}
 		out.println();
+	}
+
+	@Override
+	public void exitGame() {
+		exit = true;
 	}
 	
 }

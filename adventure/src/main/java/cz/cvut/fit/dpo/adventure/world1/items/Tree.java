@@ -1,4 +1,4 @@
-package cz.cvut.fit.dpo.adventure.world1;
+package cz.cvut.fit.dpo.adventure.world1.items;
 
 import cz.cvut.fit.dpo.adventure.model.IGameObject;
 import cz.cvut.fit.dpo.adventure.model.builder.WorldDefinition;

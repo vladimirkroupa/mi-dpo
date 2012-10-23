@@ -87,7 +87,7 @@ public class GameFacadePojo implements GameModelFacade, GameModelSpiFacade, Obse
 	}
 	
 	private void unknownEntity(String name) {
-		ErrorEvent event = new ErrorEvent("There is no " + "\"name\"" + " here.");
+		ErrorEvent event = new ErrorEvent("There is no " + "\"" + name + "\"" + " here.");
 		notifyObservers(event);
 	}
 	

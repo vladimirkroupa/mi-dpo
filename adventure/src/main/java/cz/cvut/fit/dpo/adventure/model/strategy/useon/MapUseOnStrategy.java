@@ -19,7 +19,7 @@ public class MapUseOnStrategy implements UseOnStrategy {
 			interaction.useOn(target, what, game.getGameState());
 			game.createSimpleEvent(interaction.description());
 		} else {
-			game.createSimpleEvent("You have no idea how to use " + what.name() + " on " + target.name());
+			game.createSimpleEvent("You have no idea how to use the " + what.name() + " on the " + target.name());
 		}
 	}
 	
