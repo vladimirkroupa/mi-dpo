@@ -71,7 +71,7 @@ public class GameFacadePojo implements GameModelFacade, GameModelSpiFacade, Obse
 				return item;
 			}
 		}
-		unknownEntity(name);
+		unknownEntity(name, "item");
 		return null;
 	}
 
@@ -82,12 +82,12 @@ public class GameFacadePojo implements GameModelFacade, GameModelSpiFacade, Obse
 				return location;
 			}
 		}
-		unknownEntity(name);
+		unknownEntity(name, "exit");
 		return null;
 	}
 	
-	private void unknownEntity(String name) {
-		ErrorEvent event = new ErrorEvent("There is no " + "\"" + name + "\"" + " here.");
+	private void unknownEntity(String name, String what) {
+		ErrorEvent event = new ErrorEvent("There is no " + what + " " + "\"" + name + "\"" + " here.");
 		notifyObservers(event);
 	}
 	

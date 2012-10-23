@@ -8,7 +8,7 @@ public class ImmovablePickupStrategy implements PickupStrategy {
 	private String reasonForImmovability;
 	
 	public ImmovablePickupStrategy() {
-		this.reasonForImmovability = "cannot be picked up";
+		this.reasonForImmovability = "";
 	}
 
 	public ImmovablePickupStrategy(String reasonForImmovability) {
@@ -17,7 +17,7 @@ public class ImmovablePickupStrategy implements PickupStrategy {
 
 	@Override
 	public boolean pickUp(IGameObject object, GameModelSpiFacade game) {
-		String message = object.name() + " " + reasonForImmovability + ".";
+		String message = object.name() + " cannot be picked up. " + reasonForImmovability + ".";
 		game.createSimpleEvent(message);
 		return false;
 	}

@@ -14,10 +14,7 @@ public class ItemPair {
 
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((item1 == null) ? 0 : item1.hashCode());
-		result = prime * result + ((item2 == null) ? 0 : item2.hashCode());
+		int result = item1.hashCode() * item2.hashCode();
 		return result;
 	}
 
