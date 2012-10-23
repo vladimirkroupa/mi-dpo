@@ -9,8 +9,4 @@ public interface ItemInteraction {
 	
 	String description();
 	
-	IGameObject target();
-	
-	IGameObject object();
-
 }

@@ -1,43 +1,28 @@
 package cz.cvut.fit.dpo.adventure.world1;
 
-import cz.cvut.fit.dpo.adventure.model.AbstractGameObject;
 import cz.cvut.fit.dpo.adventure.model.IGameObject;
-import cz.cvut.fit.dpo.adventure.model.facade.GameModelSpiFacade;
+import cz.cvut.fit.dpo.adventure.model.builder.WorldDefinition;
+import cz.cvut.fit.dpo.adventure.model.item.DelegatingGameObject;
 import cz.cvut.fit.dpo.adventure.model.strategy.DescriptionExamineStrategy;
-import cz.cvut.fit.dpo.adventure.model.strategy.ExamineStrategy;
-import cz.cvut.fit.dpo.adventure.model.strategy.pickup.ImmovablePickupStrategy;
+import cz.cvut.fit.dpo.adventure.model.strategy.NoOpManipulationStrategy;
 import cz.cvut.fit.dpo.adventure.model.strategy.pickup.PickablePickupStrategy;
-import cz.cvut.fit.dpo.adventure.model.strategy.pickup.PickupStrategy;
 import cz.cvut.fit.dpo.adventure.model.strategy.useon.MapUseOnStrategy;
 
-public class Stick extends AbstractGameObject {
+public class Stick extends DelegatingGameObject {
 
-private static final String DESCRIPTION = "You see an old apple tree. There are some apples high in the branches.";
+	private static final String DESCRIPTION = "You see a stick.";
 	
-	private final PickupStrategy pickup = new PickablePickupStrategy();
-	private final ExamineStrategy examine = new DescriptionExamineStrategy(DESCRIPTION);
-	private final MapUseOnStrategy useOn = new MapUseOnStrategy();
-	
-	@Override
-	public void examine(GameModelSpiFacade game) {
-		examine.examine(this, game);
+	public Stick(WorldDefinition world) {
+		super("stick");
+		setPickupStrategy(new PickablePickupStrategy());
+		setExamineStrategy(new DescriptionExamineStrategy(DESCRIPTION));
+		setUseOnStrategy(new MapUseOnStrategy(world));
+		setManipulateStrategy(new NoOpManipulationStrategy() {
+			@Override
+			protected String createNoOpActionDescription(IGameObject item) {
+				return "You twirl the stick in your hand.";
+			}
+		});
 	}
-	
-	@Override
-	public boolean pickUp(GameModelSpiFacade game) {
-		pickup.pickUp(this, game);
-	}
-	
-	@Override
-	public void manipulate(GameModelSpiFacade game) {
-		// TODO Auto-generated method stub
-	}
-	
-	@Override
-	public void useOn(IGameObject what, GameModelSpiFacade game) {
-		// TODO Auto-generated method stub
-		
-	}
-	
 	
 }

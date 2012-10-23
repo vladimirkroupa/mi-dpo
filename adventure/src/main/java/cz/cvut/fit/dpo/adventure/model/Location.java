@@ -17,15 +17,13 @@ public class Location implements ILocation, IContainer {
 		adjacentLocations = new ArrayList<>();
 	}
 	
-	// spi methods!
-	void addItem(IGameObject item) {
+	public void addItem(IGameObject item) {
 		container.spawn(item);
 	}
 	
-	void addExit(ILocation exit) {
+	public void addExit(ILocation exit) {
 		adjacentLocations.add(exit);
 	}
-	// end of spi methods
 
 	
 	@Override

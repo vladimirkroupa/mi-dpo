@@ -2,7 +2,7 @@ package cz.cvut.fit.dpo.adventure.model;
 
 import java.util.List;
 
-import cz.cvut.fit.dpo.adventure.model.builder.WorldBuilder;
+import cz.cvut.fit.dpo.adventure.model.builder.WorldDefinition;
 import cz.cvut.fit.dpo.adventure.model.facade.GameModelSpiFacade;
 
 public class GameState {
@@ -12,7 +12,7 @@ public class GameState {
 	private ILocation currentLocation;
 	private Container inventory;
 	
-	public GameState(GameModelSpiFacade modelSpi, WorldBuilder builder) {
+	public GameState(GameModelSpiFacade modelSpi, WorldDefinition builder) {
 		this.modelSpi = modelSpi;
 		this.currentLocation = builder.initialLocation();
 		this.inventory = new Container();

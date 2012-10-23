@@ -28,7 +28,7 @@ public class GameEvent implements IGameEvent {
 	}
 	
 	@Override
-	public boolean shouldUpdateLocation() {
+	public boolean shouldUpdateState() {
 		return updateLocation;
 	}
 	

@@ -19,19 +19,19 @@ public abstract class DelegatingGameObject extends AbstractGameObject {
 		super(name);
 	}
 	
-	public void setPickup(PickupStrategy pickup) {
+	public void setPickupStrategy(PickupStrategy pickup) {
 		this.pickUpStrategy = pickup;
 	}
 
-	public void setExamine(ExamineStrategy examine) {
+	public void setExamineStrategy(ExamineStrategy examine) {
 		this.examineStrategy = examine;
 	}
 
-	public void setUseOn(UseOnStrategy useOn) {
+	public void setUseOnStrategy(UseOnStrategy useOn) {
 		this.useOnStrategy = useOn;
 	}
 
-	public void setManipulate(ManipulationStrategy manipulate) {
+	public void setManipulateStrategy(ManipulationStrategy manipulate) {
 		this.manipulateStrategy = manipulate;
 	}
 

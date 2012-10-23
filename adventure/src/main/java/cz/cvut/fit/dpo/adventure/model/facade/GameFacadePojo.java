@@ -7,7 +7,7 @@ import com.google.common.collect.Lists;
 import cz.cvut.fit.dpo.adventure.model.IGameObject;
 import cz.cvut.fit.dpo.adventure.model.GameState;
 import cz.cvut.fit.dpo.adventure.model.ILocation;
-import cz.cvut.fit.dpo.adventure.model.builder.WorldBuilder;
+import cz.cvut.fit.dpo.adventure.model.builder.WorldDefinition;
 import cz.cvut.fit.dpo.adventure.model.command.IGameCommand;
 import cz.cvut.fit.dpo.adventure.model.observer.ErrorEvent;
 import cz.cvut.fit.dpo.adventure.model.observer.GameEvent;
@@ -20,7 +20,7 @@ public class GameFacadePojo implements GameModelFacade, GameModelSpiFacade, Obse
 	private final List<GameEventObserver> observers;
 	private final GameState game;
 
-	public GameFacadePojo(WorldBuilder wb) {
+	public GameFacadePojo(WorldDefinition wb) {
 		observers = Lists.newArrayList();
 		game = new GameState(this, wb);
 	}

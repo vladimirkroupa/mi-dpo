@@ -4,6 +4,6 @@ public interface IGameEvent {
 
 	String description();
 
-	boolean shouldUpdateLocation();
+	boolean shouldUpdateState();
 	
 }
