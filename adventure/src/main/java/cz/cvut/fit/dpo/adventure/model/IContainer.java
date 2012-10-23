@@ -4,12 +4,12 @@ import java.util.List;
 
 public interface IContainer {
 
-	void spawn(GameObject item);
+	void spawn(IGameObject item);
 	
-	void transferItemTo(GameObject item, IContainer otherContainer);
+	void transferItemTo(IGameObject item, IContainer otherContainer);
 	
-	void destroy(GameObject item);
+	void destroy(IGameObject item);
 	
-	List<GameObject> content();
+	List<IGameObject> content();
 	
 }

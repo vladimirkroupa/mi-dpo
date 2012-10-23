@@ -1,12 +1,15 @@
 package cz.cvut.fit.dpo.adventure.model;
 
+import cz.cvut.fit.dpo.adventure.model.facade.GameModelSpiFacade;
+
 public interface GameObjectState {
 
-	void examine();
+	void examine(GameModelSpiFacade game);
 	
-	void pickUp();
+	boolean pickUp(GameModelSpiFacade game);
 	
-	void manipulate();
+	void manipulate(GameModelSpiFacade game);
 	
-	void useOn(GameObject item);
+	void useOn(IGameObject what, GameModelSpiFacade game);
+	
 }

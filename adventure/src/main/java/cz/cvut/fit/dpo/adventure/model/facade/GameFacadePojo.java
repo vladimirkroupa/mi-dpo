@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.google.common.collect.Lists;
 
-import cz.cvut.fit.dpo.adventure.model.GameObject;
+import cz.cvut.fit.dpo.adventure.model.IGameObject;
 import cz.cvut.fit.dpo.adventure.model.GameState;
 import cz.cvut.fit.dpo.adventure.model.ILocation;
 import cz.cvut.fit.dpo.adventure.model.builder.WorldBuilder;
@@ -19,12 +19,17 @@ public class GameFacadePojo implements GameModelFacade, GameModelSpiFacade, Obse
 
 	private final List<GameEventObserver> observers;
 	private final GameState game;
-	
+
 	public GameFacadePojo(WorldBuilder wb) {
 		observers = Lists.newArrayList();
 		game = new GameState(this, wb);
 	}
-
+	
+	@Override
+	public ILocation currentLocation() {
+		return game.currentLocation();
+	}
+	
 	@Override
 	public void registerObserver(GameEventObserver observer) {
 		observers.add(observer);
@@ -60,8 +65,8 @@ public class GameFacadePojo implements GameModelFacade, GameModelSpiFacade, Obse
 	}
 
 	@Override
-	public GameObject findGameObject(String name) {
-		for (GameObject item : game.currentLocation().content()) {
+	public IGameObject findGameObject(String name) {
+		for (IGameObject item : game.currentLocation().content()) {
 			if (item.name().equals(name)) {
 				return item;
 			}

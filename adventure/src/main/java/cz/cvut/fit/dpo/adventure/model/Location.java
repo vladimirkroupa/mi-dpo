@@ -18,7 +18,7 @@ public class Location implements ILocation, IContainer {
 	}
 	
 	// spi methods!
-	void addItem(GameObject item) {
+	void addItem(IGameObject item) {
 		container.spawn(item);
 	}
 	
@@ -39,7 +39,7 @@ public class Location implements ILocation, IContainer {
 	}
 
 	@Override
-	public List<GameObject> objectsHere() {
+	public List<IGameObject> objectsHere() {
 		return content();
 	}
 
@@ -49,22 +49,22 @@ public class Location implements ILocation, IContainer {
 	}
 
 	@Override
-	public void spawn(GameObject item) {
+	public void spawn(IGameObject item) {
 		container.spawn(item);
 	}
 
 	@Override
-	public void transferItemTo(GameObject item, IContainer otherContainer) {
+	public void transferItemTo(IGameObject item, IContainer otherContainer) {
 		container.transferItemTo(item, otherContainer);
 	}
 
 	@Override
-	public void destroy(GameObject item) {
+	public void destroy(IGameObject item) {
 		container.destroy(item);
 	}
 
 	@Override
-	public List<GameObject> content() {
+	public List<IGameObject> content() {
 		return container.content();
 	}
 

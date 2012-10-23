@@ -12,5 +12,10 @@ public class ErrorEvent implements IGameEvent {
 	public String description() {
 		return description;
 	}
+
+	@Override
+	public boolean shouldUpdateLocation() {
+		return false;
+	}
 	
 }

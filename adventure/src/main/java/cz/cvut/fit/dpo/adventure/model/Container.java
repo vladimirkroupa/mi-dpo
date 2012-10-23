@@ -6,30 +6,30 @@ import java.util.List;
 
 public class Container implements IContainer {
 
-	private final List<GameObject> items;
+	private final List<IGameObject> items;
 	
 	public Container() {
 		items = new ArrayList<>();
 	}
 
 	@Override
-	public void spawn(GameObject item) {
+	public void spawn(IGameObject item) {
 		items.add(item);
 	}
 
 	@Override
-	public void transferItemTo(GameObject item, IContainer otherContainer) {
+	public void transferItemTo(IGameObject item, IContainer otherContainer) {
 		otherContainer.spawn(item);
 		this.destroy(item);
 	}
 
 	@Override
-	public void destroy(GameObject item) {
+	public void destroy(IGameObject item) {
 		items.remove(item);
 	}
 
 	@Override
-	public List<GameObject> content() {
+	public List<IGameObject> content() {
 		return Collections.unmodifiableList(items);
 	}
 

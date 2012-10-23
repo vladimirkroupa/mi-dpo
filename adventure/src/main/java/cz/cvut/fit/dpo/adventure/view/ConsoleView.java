@@ -2,7 +2,7 @@ package cz.cvut.fit.dpo.adventure.view;
 
 import java.io.PrintStream;
 
-import cz.cvut.fit.dpo.adventure.model.GameObject;
+import cz.cvut.fit.dpo.adventure.model.IGameObject;
 import cz.cvut.fit.dpo.adventure.model.ILocation;
 import cz.cvut.fit.dpo.adventure.model.facade.GameModelFacade;
 import cz.cvut.fit.dpo.adventure.model.observer.IGameEvent;
@@ -24,7 +24,7 @@ public class ConsoleView implements GameView {
 	
 	@Override
 	public void gameEventOccured(IGameEvent event) {
-		out.println(event.decsription());
+		out.println(event.description());
 		out.println();
 	}
 
@@ -47,7 +47,7 @@ public class ConsoleView implements GameView {
 	
 	void printObjects() {
 		out.print("You see ");
-		for (GameObject object : model.currentLocation().objectsHere()) {
+		for (IGameObject object : model.currentLocation().objectsHere()) {
 			out.print(object.name());
 			out.print(", ");
 		}

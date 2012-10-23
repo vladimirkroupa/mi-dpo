@@ -1,6 +1,6 @@
 package cz.cvut.fit.dpo.adventure.controller;
 
-import cz.cvut.fit.dpo.adventure.model.GameObject;
+import cz.cvut.fit.dpo.adventure.model.IGameObject;
 import cz.cvut.fit.dpo.adventure.model.ILocation;
 import cz.cvut.fit.dpo.adventure.model.command.DropCommand;
 import cz.cvut.fit.dpo.adventure.model.command.ExamineCommand;
@@ -24,7 +24,7 @@ public class GameController implements IGameController {
 
 	@Override
 	public void examine(String item) {
-		GameObject object = gameFacade.findGameObject(item);
+		IGameObject object = gameFacade.findGameObject(item);
 		if (object != null) {
 			IGameCommand examine = new ExamineCommand(gameSpiFacade.getGameState(), object);
 			gameFacade.acceptCommand(examine);
@@ -42,7 +42,7 @@ public class GameController implements IGameController {
 
 	@Override
 	public void pickUp(String item) {
-		GameObject object = gameFacade.findGameObject(item);
+		IGameObject object = gameFacade.findGameObject(item);
 		if (object != null) {
 			IGameCommand pickup = new PickUpCommand(gameSpiFacade.getGameState(), object);
 			gameFacade.acceptCommand(pickup);
@@ -51,7 +51,7 @@ public class GameController implements IGameController {
 
 	@Override
 	public void drop(String item) {
-		GameObject object = gameFacade.findGameObject(item);
+		IGameObject object = gameFacade.findGameObject(item);
 		if (object != null) {
 			IGameCommand drop = new DropCommand(gameSpiFacade.getGameState(), object);
 			gameFacade.acceptCommand(drop);
@@ -60,8 +60,8 @@ public class GameController implements IGameController {
 
 	@Override
 	public void useOn(String what, String on) {
-		GameObject object = gameFacade.findGameObject(what);
-		GameObject target = gameFacade.findGameObject(on);
+		IGameObject object = gameFacade.findGameObject(what);
+		IGameObject target = gameFacade.findGameObject(on);
 		if (object != null) {
 			IGameCommand useOn = new UseOnCommand(gameSpiFacade.getGameState(), object, target);
 			gameFacade.acceptCommand(useOn);

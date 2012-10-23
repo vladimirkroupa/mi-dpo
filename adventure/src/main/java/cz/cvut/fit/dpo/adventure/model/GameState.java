@@ -16,13 +16,13 @@ public class GameState {
 		this.modelSpi = modelSpi;
 		this.currentLocation = builder.initialLocation();
 		this.inventory = new Container();
-		for (GameObject item : builder.initialInventory()) {
+		for (IGameObject item : builder.initialInventory()) {
 			inventory.spawn(item);
 		}
 	}
 	
-	public void examine(GameObject item) {
-		modelSpi.createSimpleEvent(item.describe());
+	public void examine(IGameObject item) {
+		item.examine(modelSpi);
 	}
 
 	public void exitTo(ILocation exit) {
@@ -30,23 +30,27 @@ public class GameState {
 		modelSpi.createMajorEvent();
 	}
 
-	public void pickUp(GameObject item) {
-		currentLocation.transferItemTo(item, inventory);
-		modelSpi.createSimpleEvent("You picked up the " + item.name());
+	public void pickUp(IGameObject item) {
+		if (item.pickUp(modelSpi)) {
+			currentLocation.transferItemTo(item, inventory);
+		}
 	}
 
-	public void drop(GameObject item) {
+	public void drop(IGameObject item) {
 		inventory.transferItemTo(item, currentLocation);
 		modelSpi.createSimpleEvent("You dropped the " + item.name());
 	}
 
-	public void useOn(GameObject what, GameObject target) {
-		target.useOn(what);
+	public void useOn(IGameObject what, IGameObject target) {
+		target.useOn(what, modelSpi);
 	}
 	
-	// asi ne
-	public List<GameObject> itemsCarried() {
+	public List<IGameObject> itemsCarried() {
 		return inventory.content();
+	}
+	
+	public void removeFromInventory(IGameObject item) {
+		inventory.destroy(item);
 	}
 	
 	public ILocation currentLocation() {

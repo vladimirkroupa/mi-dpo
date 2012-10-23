@@ -4,7 +4,7 @@ import java.util.List;
 
 public interface ILocation extends HasName, HasDescription, IContainer {
 
-	List<GameObject> objectsHere();
+	List<IGameObject> objectsHere();
 	
 	List<ILocation> exits();
 
