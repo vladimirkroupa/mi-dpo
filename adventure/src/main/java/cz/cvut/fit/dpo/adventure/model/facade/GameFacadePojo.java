@@ -111,9 +111,13 @@ public class GameFacadePojo implements GameModelFacade, GameModelSpiFacade, Obse
 	@Override
 	public void acceptCommand(IGameCommand command) {
 		command.execute();
-		if (world.checkWinningState(game)) {
+		if (checkWinningState()) {
 			createMajorEvent("**** You won! ***");
 		}
+	}
+	
+	public boolean checkWinningState() {
+		return world.checkWinningState(game);
 	}
 	
 }
