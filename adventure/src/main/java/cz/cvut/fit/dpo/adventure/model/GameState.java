@@ -31,14 +31,27 @@ public class GameState {
 	}
 
 	public void pickUp(IGameObject item) {
-		if (item.pickUp(modelSpi)) {
-			currentLocation.transferItemTo(item, inventory);
+		if (! currentLocation.contains(item.name())) {
+			if (inventory.contains(item.name())) {
+				modelSpi.createSimpleEvent("You already have the " + item.name() + ".");	
+			} else {
+				modelSpi.createSimpleEvent("There is no " + item.name() + ".");
+			}
+		} else {
+			boolean canPickUp = item.pickUp(modelSpi);
+			if (canPickUp) {
+				currentLocation.transferItemTo(item, inventory);
+			}
 		}
 	}
 
 	public void drop(IGameObject item) {
-		inventory.transferItemTo(item, currentLocation);
-		modelSpi.createSimpleEvent("You dropped the " + item.name());
+		if (! inventory.contains(item.name())) {
+			modelSpi.createSimpleEvent("You don't have the " + item.name() + ".");	
+		} else {
+			inventory.transferItemTo(item, currentLocation);
+			modelSpi.createSimpleEvent("You dropped the " + item.name());
+		}
 	}
 
 	public void useOn(IGameObject what, IGameObject target) {
