@@ -55,7 +55,9 @@ public class ConsoleView implements GameView {
 		if (CommandParser.isNullaryCommand(command)) {
 			// check argument count
 			String action = words[0];
-			if (action.startsWith(CommandParser.QUIT)) {
+			if (action.startsWith(CommandParser.HELP)) {
+				out.println("Commands: examine <item>, take <item>, drop <item>, use <item1> <item2>, help, status, quit.");
+			} else if (action.startsWith(CommandParser.QUIT)) {
 				controller.exitGame();
 			} else if (action.startsWith(CommandParser.LOOK_AROUND)) {
 				controller.lookAround();

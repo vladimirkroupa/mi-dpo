@@ -6,4 +6,6 @@ public interface Observable {
 	
 	void removeObserver(GameEventObserver observer);
 
+	void notifyObservers(IGameEvent event);
+	
 }

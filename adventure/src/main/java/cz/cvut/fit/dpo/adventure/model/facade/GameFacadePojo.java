@@ -65,7 +65,8 @@ public class GameFacadePojo implements GameModelFacade, GameModelSpiFacade, Obse
 		notifyObservers(event);		
 	}
 	
-	private void notifyObservers(IGameEvent event) {
+	@Override
+	public void notifyObservers(IGameEvent event) {
 		for (GameEventObserver observer : observers) {
 			observer.gameEventOccured(event);
 		}		

@@ -19,7 +19,7 @@ public class GameIntegrationTest {
 	@Test
 	public void test() {
 		GameFacadePojo model = new GameFacadePojo(World1Definition.getInstance());
-		ConsoleView view = new ConsoleView(model, null);
+		new ConsoleView(model, null);
 		
 		IGameObject stick = model.findGameObject("stick");
 		model.acceptCommand(new PickUpCommand(model.getGameState(), stick));
