@@ -4,8 +4,8 @@ import java.util.List;
 
 import com.google.common.collect.Lists;
 
-import cz.cvut.fit.dpo.adventure.model.IGameObject;
 import cz.cvut.fit.dpo.adventure.model.GameState;
+import cz.cvut.fit.dpo.adventure.model.IGameObject;
 import cz.cvut.fit.dpo.adventure.model.ILocation;
 import cz.cvut.fit.dpo.adventure.model.builder.WorldDefinition;
 import cz.cvut.fit.dpo.adventure.model.command.IGameCommand;
@@ -36,6 +36,8 @@ public class GameFacadePojo implements GameModelFacade, GameModelSpiFacade, Obse
 	public List<IGameObject> itemsCarried() {
 		return game.itemsCarried();
 	}
+	
+	// Observable
 
 	@Override
 	public void registerObserver(GameEventObserver observer) {
@@ -47,6 +49,17 @@ public class GameFacadePojo implements GameModelFacade, GameModelSpiFacade, Obse
 		observers.remove(observer);
 	}
 
+	@Override
+	public void notifyObservers(IGameEvent event) {
+		for (GameEventObserver observer : observers) {
+			observer.gameEventOccured(event);
+		}		
+	}
+
+	// end of Observable
+	
+	// Game SPI
+	
 	@Override
 	public void createSimpleEvent(String description) {
 		IGameEvent event = GameEvent.minorEvent(description);
@@ -65,13 +78,6 @@ public class GameFacadePojo implements GameModelFacade, GameModelSpiFacade, Obse
 		notifyObservers(event);		
 	}
 	
-	@Override
-	public void notifyObservers(IGameEvent event) {
-		for (GameEventObserver observer : observers) {
-			observer.gameEventOccured(event);
-		}		
-	}
-
 	@Override
 	public IGameObject findGameObject(String name) {
 		for (IGameObject item : game.itemsCarried()) {
@@ -113,7 +119,7 @@ public class GameFacadePojo implements GameModelFacade, GameModelSpiFacade, Obse
 	public void acceptCommand(IGameCommand command) {
 		command.execute();
 		if (checkWinningState()) {
-			createMajorEvent("**** You won! ***");
+			createSimpleEvent("**** You won! ***");
 		}
 	}
 	
