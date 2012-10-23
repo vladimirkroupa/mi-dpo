@@ -90,6 +90,7 @@ public class ConsoleView implements GameView {
 		printLocation();
 		printObjects();
 		printExits();
+		printInventory();
 	}
 	
 	void printLocation() {
@@ -98,7 +99,9 @@ public class ConsoleView implements GameView {
 	}
 	
 	void printObjects() {
-		out.print("You see ");
+		if (! model.currentLocation().objectsHere().isEmpty()) {
+			out.print("You see ");
+		}
 		for (IGameObject object : model.currentLocation().objectsHere()) {
 			out.print(object.name());
 			out.print(", ");
@@ -111,6 +114,18 @@ public class ConsoleView implements GameView {
 		for (ILocation exit : model.currentLocation().exits()) {
 			out.print(exit.name());
 			out.print(", ");
+		}
+		out.println();
+	}
+	
+	void printInventory() {
+		if (model.itemsCarried().isEmpty()) {
+			out.println("You have no items.");
+		} else {
+			out.println("You have:");
+			for (IGameObject item : model.itemsCarried()) {
+				out.println(item.name());
+			}
 		}
 		out.println();
 	}

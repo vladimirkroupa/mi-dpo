@@ -9,7 +9,7 @@ public class PickablePickupStrategy implements PickupStrategy {
 	public boolean pickUp(IGameObject object, GameModelSpiFacade game) {
 		String message = "You picked up the " + object.name() + ".";
 		game.createSimpleEvent(message);
-		return false;
+		return true;
 	}
 	
 }

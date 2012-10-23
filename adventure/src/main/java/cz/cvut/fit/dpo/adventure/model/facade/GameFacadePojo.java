@@ -19,10 +19,12 @@ public class GameFacadePojo implements GameModelFacade, GameModelSpiFacade, Obse
 
 	private final List<GameEventObserver> observers;
 	private final GameState game;
-
+	private final WorldDefinition world;
+	
 	public GameFacadePojo(WorldDefinition wb) {
 		observers = Lists.newArrayList();
 		game = new GameState(this, wb);
+		this.world = wb;
 	}
 	
 	@Override
@@ -30,6 +32,11 @@ public class GameFacadePojo implements GameModelFacade, GameModelSpiFacade, Obse
 		return game.currentLocation();
 	}
 	
+	@Override
+	public List<IGameObject> itemsCarried() {
+		return game.itemsCarried();
+	}
+
 	@Override
 	public void registerObserver(GameEventObserver observer) {
 		observers.add(observer);
@@ -66,6 +73,11 @@ public class GameFacadePojo implements GameModelFacade, GameModelSpiFacade, Obse
 
 	@Override
 	public IGameObject findGameObject(String name) {
+		for (IGameObject item : game.itemsCarried()) {
+			if (item.name().equals(name)) {
+				return item;
+			}
+		}
 		for (IGameObject item : game.currentLocation().content()) {
 			if (item.name().equals(name)) {
 				return item;
@@ -99,6 +111,9 @@ public class GameFacadePojo implements GameModelFacade, GameModelSpiFacade, Obse
 	@Override
 	public void acceptCommand(IGameCommand command) {
 		command.execute();
+		if (world.checkWinningState(game)) {
+			createMajorEvent("**** You won! ***");
+		}
 	}
-
+	
 }

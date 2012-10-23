@@ -6,11 +6,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import cz.cvut.fit.dpo.adventure.model.GameState;
 import cz.cvut.fit.dpo.adventure.model.IGameObject;
 import cz.cvut.fit.dpo.adventure.model.Location;
 import cz.cvut.fit.dpo.adventure.model.builder.WorldDefinition;
 import cz.cvut.fit.dpo.adventure.model.manipulation.ItemInteraction;
 import cz.cvut.fit.dpo.adventure.model.strategy.useon.ItemPair;
+import cz.cvut.fit.dpo.adventure.world1.items.Apple;
 import cz.cvut.fit.dpo.adventure.world1.items.Stick;
 import cz.cvut.fit.dpo.adventure.world1.items.Tree;
 import cz.cvut.fit.dpo.adventure.world1.location.Cave;
@@ -24,6 +26,9 @@ public class World1Definition implements WorldDefinition {
 	
 	private Stick stick;
 	private Tree tree;
+	private Apple apple;
+	
+	private Location finishingLocation;
 	
 	private List<IGameObject> allItems;
 	
@@ -49,6 +54,8 @@ public class World1Definition implements WorldDefinition {
 		allItems.add(tree);
 		stick = new Stick(this);
 		allItems.add(stick);
+		apple = new Apple(this);
+		allItems.add(apple);
 	}
 
 	private void initLocations() {
@@ -62,6 +69,7 @@ public class World1Definition implements WorldDefinition {
 		hill.addItem(stick);
 		
 		initial = hill;
+		finishingLocation = cave;
 	}
 	
 	private void initInteractions() {
@@ -93,5 +101,11 @@ public class World1Definition implements WorldDefinition {
 		return null;
 	}
 
+	@Override
+	public boolean checkWinningState(GameState gameState) {
+		boolean locationOk = gameState.currentLocation().name().equals(finishingLocation.name());
+		boolean containsItem = finishingLocation.content().contains(apple);
+		return locationOk && containsItem;
+	}
 
 }
