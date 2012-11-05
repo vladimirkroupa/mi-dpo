@@ -19,9 +19,6 @@ dependencies {
    
 	// testing    
     testCompile 'junit:junit:4.10'	
-	testCompile 'junit-addons:junit-addons:1.4'
-	testCompile 'org.unitils:unitils-core:3.3'
-	testCompile 'org.mockito:mockito-core:1.9.0'
 	testCompile 'org.easytesting:fest-assert-core:2.+'
 	
 }

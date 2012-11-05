@@ -1,36 +1,36 @@
 package cz.cvut.fit.dpo.strategy.tree;
 
+import java.util.ArrayDeque;
+import java.util.Deque;
 import java.util.Iterator;
-import java.util.List;
 import java.util.NoSuchElementException;
 
 import cz.cvut.fit.dpo.strategy.tree.node.Node;
 
 /**
- * Iterator for iterating immutable trees consisting of {@link Node}s. 
+ * Iterator using BFS for iterating immutable trees consisting of {@link Node}s. 
  * The structure of the tree must not change during the lifetime of this iterator. 
  * 
  * @param <T> type of node content
  * 
  * @author kroupvla
  */
-public class ImmutableTreeIterator<T> implements Iterator<Node<T>> {
+public class BFSTreeIterator<T> implements Iterator<Node<T>> {
 
-	private final List<Node<T>> nodesToVisit;
-	private int nextIndex ;
+	private Deque<Node<T>> queue;
 	
 	/**
 	 * Constructor.
 	 * @param nodesToVisit list of nodes in order which they should be visited 
 	 */
-	ImmutableTreeIterator( List<Node<T>> nodesToVisit ) {
-		this.nodesToVisit = nodesToVisit;
-		nextIndex = 0;
+	BFSTreeIterator(Node<T> root ) {
+		this.queue = new ArrayDeque<Node<T>>();
+		queue.offer( root );
 	}
 
 	@Override
 	public boolean hasNext() {
-		return ( nextIndex < nodesToVisit.size() );
+		return ! queue.isEmpty();
 	}
 
 	@Override
@@ -38,7 +38,12 @@ public class ImmutableTreeIterator<T> implements Iterator<Node<T>> {
 		if ( ! hasNext() ) {
 			throw new NoSuchElementException();
 		}
-		return nodesToVisit.get( nextIndex++ );
+		Node<T> node = queue.pollFirst();
+		for ( int i = 0; i < node.childCount(); i++ ) {
+			Node<T> child = node.child( i );
+			queue.offer( child );
+		}
+		return node;
 	}
 
 	@Override

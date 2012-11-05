@@ -1,6 +1,6 @@
 package cz.cvut.fit.dpo.strategy.tree;
 
-import java.util.List;
+import java.util.Iterator;
 
 import cz.cvut.fit.dpo.strategy.tree.node.Node;
 
@@ -12,12 +12,12 @@ import cz.cvut.fit.dpo.strategy.tree.node.Node;
 public interface TreeWalkStrategy {
 
 	/**
-	 * Creates list in the order nodes will be visited.
+	 * TODO
 	 * Order is left on the strategy implementation to decide. 
 	 * 
 	 * @param root tree root
-	 * @return list of nodes ordered using the tree walking strategy
+	 * @return TODO
 	 */
-	<T> List<Node<T>> prepareNodesForVisit( Node<T> root );
+	<T> Iterator<Node<T>> iterator( Node<T> root );
 
 }

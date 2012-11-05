@@ -1,7 +1,6 @@
 package cz.cvut.fit.dpo.strategy.tree;
 
 import java.util.Iterator;
-import java.util.List;
 
 import com.google.common.base.Preconditions;
 
@@ -18,22 +17,26 @@ import cz.cvut.fit.dpo.strategy.util.ReflectionObject;
 public class ImmutableTree<T> extends ReflectionObject implements Tree<T> {
 
 	private final Node<T> root;
-	private TreeWalkStrategy walker;
+	private TreeWalkStrategy strategy;
 	
-	public ImmutableTree( Node<T> root, TreeWalkStrategy walker ) {
+	public ImmutableTree( Node<T> root ) {
+		this( root, new DepthFirstTreeWalkStrategy() );
+	}
+
+	
+	public ImmutableTree( Node<T> root, TreeWalkStrategy strategy ) {
 		Preconditions.checkNotNull( this.root = root );
-		Preconditions.checkNotNull( this.walker = walker );
+		Preconditions.checkNotNull( this.strategy = strategy );
 	}
 
 	@Override
 	public Iterator<Node<T>> iterator() {
-		List<Node<T>> nodes = walker.prepareNodesForVisit( root );
-		return new ImmutableTreeIterator<T>( nodes );
+		return strategy.iterator( root );
 	}
 	
 	@Override
-	public void treeWalkStrategy( TreeWalkStrategy walker ) {
-		Preconditions.checkNotNull( this.walker = walker );
+	public void treeWalkStrategy( TreeWalkStrategy strategy ) {
+		Preconditions.checkNotNull( this.strategy = strategy );
 	}
 	
 }

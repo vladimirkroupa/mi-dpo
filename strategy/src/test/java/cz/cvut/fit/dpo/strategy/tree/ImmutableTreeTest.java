@@ -28,9 +28,10 @@ public class ImmutableTreeTest {
 					)
 				.build();	
 					
-		testObject = new ImmutableTree<String>( treeRoot, new DepthFirstTreeWalk() );
+		testObject = new ImmutableTree<String>( treeRoot, new DepthFirstTreeWalkStrategy() );
 	}
 	
+	// TODO
 	@Test
 	public void todoName() {
 		Iterator<Node<String>> iterator = testObject.iterator();

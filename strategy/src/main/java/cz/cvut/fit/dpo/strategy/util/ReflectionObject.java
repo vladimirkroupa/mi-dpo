@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
  */
 public abstract class ReflectionObject {
 
-	private static final Logger log = LoggerFactory.getLogger( ReflectionObject.class );
+	//private static final Logger log = LoggerFactory.getLogger( ReflectionObject.class );
 	
 	@Override
 	public int hashCode() {
