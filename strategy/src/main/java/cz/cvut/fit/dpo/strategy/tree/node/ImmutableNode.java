@@ -6,6 +6,8 @@ import java.util.NoSuchElementException;
 
 import com.google.common.collect.Lists;
 
+import cz.cvut.fit.dpo.strategy.util.ReflectionObject;
+
 /**
  * Immutable tree node using {@link ArrayList} to hold child nodes.
  *
@@ -13,7 +15,7 @@ import com.google.common.collect.Lists;
  * 
  * @author kroupvla
  */
-public class ImmutableNode<T> implements Node<T> {
+public class ImmutableNode<T> extends ReflectionObject implements Node<T> {
 
 	private final List<ImmutableNode<T>> children;
 	private final T content;

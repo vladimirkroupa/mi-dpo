@@ -3,8 +3,6 @@ package cz.cvut.fit.dpo.strategy.util;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Object subclass using commons-lang's reflection builder to implement equals, hashCode and toString methods.

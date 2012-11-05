@@ -28,8 +28,6 @@ public class TreePrinterTest {
 	 */
 	@Test
 	public void dfsPrint() {
-		String expected = "1 2 3 4 5";
-		
 		ImmutableNode<String> root = ImmutableNode.builder( "1" )
 				.addChild( ImmutableNode.builder( "2" )
 						.addChild( ImmutableNode.builder( "3" )
@@ -39,9 +37,7 @@ public class TreePrinterTest {
 				.addChild( ImmutableNode.builder( "5" ) )
 				.build();
 		Tree<String> tree = new ImmutableTree<String>( root, new DepthFirstTreeWalkStrategy() );
-		String actual = testObject.asString( tree );
-		
-		Assert.assertEquals( expected, actual ); 
+		Assert.assertEquals( "1 2 3 4 5", testObject.asString( tree ) ); 
 	}
 	
 	
@@ -53,8 +49,6 @@ public class TreePrinterTest {
 	 */
 	@Test
 	public void bfsPrint() {
-		String expected = "1 2 5 3 6 4";
-		
 		ImmutableNode<String> root = ImmutableNode.builder( "1" )
 				.addChild( ImmutableNode.builder( "2" )
 						.addChild( ImmutableNode.builder( "3" )
@@ -66,9 +60,77 @@ public class TreePrinterTest {
 				)
 				.build();
 		Tree<String> tree = new ImmutableTree<String>( root, new BreadthFirstTreeWalkStrategy() );
+		Assert.assertEquals( "1 2 5 3 6 4", testObject.asString( tree ) ); 
+	}
+	
+	@Test
+	public void onlyRootPrint() {
+		ImmutableNode<String> root = ImmutableNode.builder( "A" ).build();
+		Tree<String> tree = new ImmutableTree<String>( root, new BreadthFirstTreeWalkStrategy() );
 		String actual = testObject.asString( tree );
+		Assert.assertEquals( "A", actual );
 		
-		Assert.assertEquals( expected, actual ); 
+		tree.treeWalkStrategy( new DepthFirstTreeWalkStrategy() );
+		Assert.assertEquals( "A", testObject.asString( tree ) );
+	}
+	
+	/**
+	 *      A
+	 * 	   B
+	 *    C
+	 *   D
+	 *  E   
+	 * F 
+	 */
+	@Test
+	public void unbalancedTreePrint() {
+		ImmutableNode<String> root = ImmutableNode.builder( "A" )
+				.addChild( ImmutableNode.builder( "B" ) )
+				.addChild( ImmutableNode.builder( "C" ) )
+				.addChild( ImmutableNode.builder( "D" ) )
+				.addChild( ImmutableNode.builder( "E" ) )
+				.addChild( ImmutableNode.builder( "F" ) )
+				.build();
+		Tree<String> tree = new ImmutableTree<String>( root, new BreadthFirstTreeWalkStrategy() );
+		Assert.assertEquals( "A B C D E F", testObject.asString( tree ) );
+		
+		tree.treeWalkStrategy( new DepthFirstTreeWalkStrategy() );
+		Assert.assertEquals( "A B C D E F", testObject.asString( tree ) );
+	}
+	
+	/**
+	 *           A1
+	 *   B1      B2     B3 
+	 * C1  C2  C3  C4  C5
+	 *    D1      D2
+	 *    		 E1  
+	 */
+	@Test
+	public void ternaryTreeDfsPrint() {
+		ImmutableNode<String> root = ImmutableNode.builder( "A1" )
+				.addChild( ImmutableNode.builder( "B1" )
+						.addChild( ImmutableNode.builder( "C1" ) )
+						.addChild( ImmutableNode.builder( "C2" )
+							.addChild( ImmutableNode.builder( "D1" ) )
+						)
+				)		
+				.addChild( ImmutableNode.builder( "B2" )
+					.addChild( ImmutableNode.builder( "C3" ) )
+					.addChild( ImmutableNode.builder( "C4" )
+						.addChild( ImmutableNode.builder( "D2" )
+							.addChild( ImmutableNode.builder( "E1" ) )
+						)
+					)
+				)
+				.addChild( ImmutableNode.builder( "B3" )
+					.addChild( ImmutableNode.builder( "C5" ) )
+				)
+				.build();
+		Tree<String> tree = new ImmutableTree<String>( root, new BreadthFirstTreeWalkStrategy() );
+		Assert.assertEquals( "A1 B1 B2 B3 C1 C2 C3 C4 C5 D1 D2 E1", testObject.asString( tree ) );
+		
+		tree.treeWalkStrategy( new DepthFirstTreeWalkStrategy() );
+		Assert.assertEquals( "A1 B1 C1 C2 D1 B2 C3 C4 D2 E1 B3 C5", testObject.asString( tree ) );
 	}
 	
 	
