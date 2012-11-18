@@ -1,38 +1,36 @@
 package cvut.fit.dpo.arithmetic;
 
-import cvut.fit.dpo.arithmetic.iterator.InOrderIterator;
-import cvut.fit.dpo.arithmetic.iterator.PostOrderIterator;
+import java.util.Iterator;
+
+import cvut.fit.dpo.arithmetic.elements.ExpressionElement;
 
 /**
  * Represents number in the arithmetic expression
  * 
  * @author Jan Kurš
  */
-public class NumericOperand {
-	private Integer value;
+public class NumericOperand implements ArithmeticExpression {
 	
-	public NumericOperand(Integer value)
-	{
-		setValue(value);
-	}
-	
-	public Integer getValue()
-	{
-		return value;
-	}
-	
-	public void setValue(Integer value)
-	{
+	private final Integer value;
+
+	public NumericOperand(Integer value) {
 		this.value = value;
 	}
-	
-	public InOrderIterator inOrderIterator()
-	{
+
+	@Override
+	public Integer evaluate() {
+		return value;
+	}
+
+	@Override
+	public Iterator<ExpressionElement> getInOrderIterator() {
+		// TODO Auto-generated method stub
 		return null;
 	}
 
-	public PostOrderIterator postOrderIterator()
-	{
+	@Override
+	public Iterator<ExpressionElement> getPostOrderIterator() {
+		// TODO Auto-generated method stub
 		return null;
 	}
 	

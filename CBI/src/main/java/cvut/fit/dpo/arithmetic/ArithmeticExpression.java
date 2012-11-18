@@ -4,39 +4,16 @@ import java.util.Iterator;
 
 import cvut.fit.dpo.arithmetic.elements.ExpressionElement;
 
-public class ArithmeticExpression
-{
-	private BinaryOperator root;
+public interface ArithmeticExpression {
 	
-	public Integer evaluate()
-	{
-		return root.evaluate();
-	}
-	
-	public void setRoot(BinaryOperator root)
-	{
-		this.root = root;
-	}
+	public Integer evaluate();
 
-	/**
-	 * {@link #root} field getter.
-	 * 
-	 * @deprecated Do not provide access to the inner representation
-	 */
-	public BinaryOperator getRoot()
-	{
-		return root;
-	}
-	
 	/**
 	 * Should be implemented.
 	 * 
 	 * @return
 	 */
-	public Iterator<ExpressionElement> getInOrderIterator()
-	{
-		throw new UnsupportedOperationException("Not yet implemented...");
-	}
+	Iterator<ExpressionElement> getInOrderIterator();
 
 	/**
 	 * Should be implemented
@@ -45,9 +22,6 @@ public class ArithmeticExpression
 	 * 
 	 * @return
 	 */
-	public Iterator<ExpressionElement> getPostOrderIterator()
-	{
-		throw new UnsupportedOperationException("Not yet implemented...");
-	}
+	Iterator<ExpressionElement> getPostOrderIterator();
 
 }
