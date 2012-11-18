@@ -6,8 +6,10 @@ import cvut.fit.dpo.arithmetic.elements.ExpressionElement;
 
 public interface ArithmeticExpression {
 	
-	public Integer evaluate();
+	Integer evaluate();
 
+	ExpressionElement getExpressionElement();
+	
 	/**
 	 * Should be implemented.
 	 * 

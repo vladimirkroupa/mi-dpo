@@ -23,6 +23,11 @@ public class NumericOperand implements ArithmeticExpression {
 	}
 
 	@Override
+	public ExpressionElement getExpressionElement() {
+		return new cvut.fit.dpo.arithmetic.elements.Number(evaluate());
+	}
+	
+	@Override
 	public Iterator<ExpressionElement> getInOrderIterator() {
 		// TODO Auto-generated method stub
 		return null;

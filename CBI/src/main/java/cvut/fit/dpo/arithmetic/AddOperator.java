@@ -2,6 +2,7 @@ package cvut.fit.dpo.arithmetic;
 
 import java.util.Iterator;
 
+import cvut.fit.dpo.arithmetic.elements.AddOperation;
 import cvut.fit.dpo.arithmetic.elements.ExpressionElement;
 
 /**
@@ -21,6 +22,11 @@ public class AddOperator extends BinaryOperator {
 		return leftOperand.evaluate() + rightOperand.evaluate();
 	}
 	
+	@Override
+	public ExpressionElement getExpressionElement() {
+		return new AddOperation();
+	}
+
 	@Override
 	public Iterator<ExpressionElement> getInOrderIterator() {
 		// TODO Auto-generated method stub

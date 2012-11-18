@@ -3,21 +3,27 @@ package cvut.fit.dpo.arithmetic;
 import java.util.Iterator;
 
 import cvut.fit.dpo.arithmetic.elements.ExpressionElement;
+import cvut.fit.dpo.arithmetic.elements.SubtractOperation;
 
 /**
  * Represents - operation
  * 
  * @author Jan Kurš
  */
-public class SubstractOperator extends BinaryOperator {
+public class SubtractOperator extends BinaryOperator {
 
-	public SubstractOperator(ArithmeticExpression leftOperand, ArithmeticExpression rightOperand) {
+	public SubtractOperator(ArithmeticExpression leftOperand, ArithmeticExpression rightOperand) {
 		super(leftOperand, rightOperand);
 	}
 
 	@Override
 	protected Integer evaluate(ArithmeticExpression leftOperand, ArithmeticExpression rightOperand) {
 		return leftOperand.evaluate() - rightOperand.evaluate();
+	}
+	
+	@Override
+	public ExpressionElement getExpressionElement() {
+		return new SubtractOperation();
 	}
 
 	@Override
