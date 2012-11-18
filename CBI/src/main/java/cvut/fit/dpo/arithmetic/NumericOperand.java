@@ -3,7 +3,7 @@ package cvut.fit.dpo.arithmetic;
 import java.util.Iterator;
 
 import cvut.fit.dpo.arithmetic.elements.ExpressionElement;
-import cvut.fit.dpo.arithmetic.iterator.ExpressionElementIterator;
+import cvut.fit.dpo.arithmetic.iterator.ExpressionElementIteratorBase;
 
 /**
  * Represents number in the arithmetic expression
@@ -38,7 +38,7 @@ public class NumericOperand implements ArithmeticExpression {
 		return new SingleElementIterator();
 	}
 	
-	class SingleElementIterator extends ExpressionElementIterator {
+	class SingleElementIterator extends ExpressionElementIteratorBase {
 
 		private boolean done = false;
 		

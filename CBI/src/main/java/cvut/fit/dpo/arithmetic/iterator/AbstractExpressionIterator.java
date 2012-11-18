@@ -9,7 +9,7 @@ import cvut.fit.dpo.arithmetic.elements.CloseBracketOperation;
 import cvut.fit.dpo.arithmetic.elements.ExpressionElement;
 import cvut.fit.dpo.arithmetic.elements.OpenBracketOperation;
 
-public abstract class AbstractExpressionIterator extends ExpressionElementIterator {
+public abstract class AbstractExpressionIterator extends ExpressionElementIteratorBase {
 
 	private IteratorState state;
 	private final BinaryOperator binaryOperator;

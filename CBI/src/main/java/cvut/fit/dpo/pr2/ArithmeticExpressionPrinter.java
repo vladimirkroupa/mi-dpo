@@ -1,10 +1,9 @@
 package cvut.fit.dpo.pr2;
 
-import cvut.fit.dpo.arithmetic.AddOperator;
+import java.util.Iterator;
+
 import cvut.fit.dpo.arithmetic.ArithmeticExpression;
-import cvut.fit.dpo.arithmetic.BinaryOperator;
-import cvut.fit.dpo.arithmetic.NumericOperand;
-import cvut.fit.dpo.arithmetic.SubtractOperator;
+import cvut.fit.dpo.arithmetic.elements.ExpressionElement;
 
 /**
  * Printer for {@link ArithmeticExpression}s. It can print inOrder notation (3 +
@@ -18,17 +17,9 @@ import cvut.fit.dpo.arithmetic.SubtractOperator;
  */
 public class ArithmeticExpressionPrinter {
 	
-	private static final String ANY_BINARY_OPERATOR_STRING = "b";
-	private static final String SUBSTRACT_OPERATOR_STRING = "-";
-	private static final String PLUS_OPERATOR_STRING = "+";
-
-	private ArithmeticExpression expression;
+	private final ArithmeticExpression expression;
 
 	public ArithmeticExpressionPrinter(ArithmeticExpression expression) {
-		setExpression(expression);
-	}
-
-	private void setExpression(ArithmeticExpression expression) {
 		this.expression = expression;
 	}
 
@@ -40,49 +31,7 @@ public class ArithmeticExpressionPrinter {
 	 * @return String in classical "inOrder" format.
 	 */
 	public String printInOrder() {
-		// Remember, do not use the getRoot() method!
-		// The iterator may help :)
-		BinaryOperator root = expression.getRoot();
-		String operator = binaryOperatorToString(root);
-
-		String lString = printInOrder(root.getLeftOperand());
-		String rString = printInOrder(root.getRightOperand());
-
-		return "(" + lString + operator + rString + ")";
-	}
-
-	private String printInOrder(Object o) {
-		if (o instanceof NumericOperand) {
-			return printInOrder((NumericOperand) o);
-		}
-
-		if (o instanceof BinaryOperator) {
-			return printInOrder((BinaryOperator) o);
-		}
-
-		throw new IllegalArgumentException("Unknown argument");
-	}
-
-	private String printInOrder(NumericOperand o) {
-		return o.getValue().toString();
-	}
-
-	private String printInOrder(BinaryOperator o) {
-		return "(" + printInOrder(o.getLeftOperand())
-				+ binaryOperatorToString(o)
-				+ printInOrder(o.getRightOperand()) + ")";
-	}
-
-	private String binaryOperatorToString(BinaryOperator o) {
-		if (o instanceof AddOperator) {
-			return PLUS_OPERATOR_STRING;
-		}
-
-		if (o instanceof SubtractOperator) {
-			return SUBSTRACT_OPERATOR_STRING;
-		}
-
-		return ANY_BINARY_OPERATOR_STRING;
+		return print(expression.getInOrderIterator());
 	}
 
 	/**
@@ -94,37 +43,15 @@ public class ArithmeticExpressionPrinter {
 	 * @return string in "postOrder" (RPN) format.
 	 */
 	public String printPostOrder() {
-		// Remember, do not use the getRoot() method!
-		// The iterator may help :)
-
-		BinaryOperator root = expression.getRoot();
-		String operator = binaryOperatorToString(root);
-
-		String lString = printPostOrder(root.getLeftOperand());
-		String rString = printPostOrder(root.getRightOperand());
-
-		return lString + " " + rString + " " + operator;
+		return print(expression.getPostOrderIterator());
 	}
-
-	private String printPostOrder(Object o) {
-		if (o instanceof NumericOperand) {
-			return printPostOrder((NumericOperand) o);
+	
+	private String print(Iterator<ExpressionElement> iterator) { 
+		StringBuilder sb = new StringBuilder();
+		while (iterator.hasNext()) {
+			sb.append(iterator.next());
 		}
-
-		if (o instanceof BinaryOperator) {
-			return printPostOrder((BinaryOperator) o);
-		}
-
-		throw new IllegalArgumentException("Unknown argument");
+		return sb.toString();
 	}
-
-	private String printPostOrder(NumericOperand o) {
-		return o.getValue().toString();
-	}
-
-	private String printPostOrder(BinaryOperator o) {
-		return printPostOrder(o.getLeftOperand()) + " "
-				+ printPostOrder(o.getRightOperand()) + " "
-				+ binaryOperatorToString(o);
-	}
+	
 }

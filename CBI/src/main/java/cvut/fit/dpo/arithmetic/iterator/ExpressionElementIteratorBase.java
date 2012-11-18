@@ -5,7 +5,7 @@ import java.util.NoSuchElementException;
 
 import cvut.fit.dpo.arithmetic.elements.ExpressionElement;
 
-public abstract class ExpressionElementIterator implements Iterator<ExpressionElement> {
+public abstract class ExpressionElementIteratorBase implements Iterator<ExpressionElement> {
 
 	@Override
 	public ExpressionElement next() {
