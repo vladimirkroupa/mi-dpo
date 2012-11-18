@@ -20,14 +20,14 @@ public class AddOperatorTest
 	public void testGetFirstOperand()
 	{
 		AddOperator o = new AddOperator(o1, o2);
-		assertEquals(o1, o.getFirstOperand());
+		assertEquals(o1, o.getLeftOperand());
 	}
 
 	@Test
 	public void testGetSecondOperand()
 	{
 		AddOperator o = new AddOperator(o1, o2);
-		assertEquals(o2, o.getSecondOperand());
+		assertEquals(o2, o.getRightOperand());
 	}
 
 }

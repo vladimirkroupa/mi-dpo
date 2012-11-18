@@ -1,7 +1,5 @@
 package cvut.fit.dpo.arithmetic;
 
-import java.util.Iterator;
-
 import cvut.fit.dpo.arithmetic.elements.ExpressionElement;
 import cvut.fit.dpo.arithmetic.elements.SubtractOperation;
 
@@ -24,18 +22,6 @@ public class SubtractOperator extends BinaryOperator {
 	@Override
 	public ExpressionElement getExpressionElement() {
 		return new SubtractOperation();
-	}
-
-	@Override
-	public Iterator<ExpressionElement> getInOrderIterator() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Iterator<ExpressionElement> getPostOrderIterator() {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 }

@@ -45,8 +45,8 @@ public class ArithmeticExpressionPrinter {
 		BinaryOperator root = expression.getRoot();
 		String operator = binaryOperatorToString(root);
 
-		String lString = printInOrder(root.getFirstOperand());
-		String rString = printInOrder(root.getSecondOperand());
+		String lString = printInOrder(root.getLeftOperand());
+		String rString = printInOrder(root.getRightOperand());
 
 		return "(" + lString + operator + rString + ")";
 	}
@@ -68,9 +68,9 @@ public class ArithmeticExpressionPrinter {
 	}
 
 	private String printInOrder(BinaryOperator o) {
-		return "(" + printInOrder(o.getFirstOperand())
+		return "(" + printInOrder(o.getLeftOperand())
 				+ binaryOperatorToString(o)
-				+ printInOrder(o.getSecondOperand()) + ")";
+				+ printInOrder(o.getRightOperand()) + ")";
 	}
 
 	private String binaryOperatorToString(BinaryOperator o) {
@@ -100,8 +100,8 @@ public class ArithmeticExpressionPrinter {
 		BinaryOperator root = expression.getRoot();
 		String operator = binaryOperatorToString(root);
 
-		String lString = printPostOrder(root.getFirstOperand());
-		String rString = printPostOrder(root.getSecondOperand());
+		String lString = printPostOrder(root.getLeftOperand());
+		String rString = printPostOrder(root.getRightOperand());
 
 		return lString + " " + rString + " " + operator;
 	}
@@ -123,8 +123,8 @@ public class ArithmeticExpressionPrinter {
 	}
 
 	private String printPostOrder(BinaryOperator o) {
-		return printPostOrder(o.getFirstOperand()) + " "
-				+ printPostOrder(o.getSecondOperand()) + " "
+		return printPostOrder(o.getLeftOperand()) + " "
+				+ printPostOrder(o.getRightOperand()) + " "
 				+ binaryOperatorToString(o);
 	}
 }

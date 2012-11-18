@@ -1,5 +1,12 @@
 package cvut.fit.dpo.arithmetic;
 
+import java.util.Iterator;
+
+import cvut.fit.dpo.arithmetic.elements.ExpressionElement;
+import cvut.fit.dpo.arithmetic.iterator.InOrderExpressionIterator;
+import cvut.fit.dpo.arithmetic.iterator.PostOrderExpressionIterator;
+
+
 
 /**
  * Represents the Binary operations like + - etc.
@@ -24,11 +31,21 @@ public abstract class BinaryOperator implements ArithmeticExpression {
 
 	protected abstract Integer evaluate(ArithmeticExpression leftOperand, ArithmeticExpression rightOperand);
 	
-	public ArithmeticExpression getFirstOperand() {
+	@Override
+	public Iterator<ExpressionElement> getInOrderIterator() {
+		return new InOrderExpressionIterator(this);
+	}
+
+	@Override
+	public Iterator<ExpressionElement> getPostOrderIterator() {
+		return new PostOrderExpressionIterator(this);
+	}
+
+	public ArithmeticExpression getLeftOperand() {
 		return leftOperand;
 	}
 
-	public ArithmeticExpression getSecondOperand() {
+	public ArithmeticExpression getRightOperand() {
 		return rightOperand;
 	}
 
