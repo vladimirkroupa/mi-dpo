@@ -28,25 +28,47 @@ public abstract class AbstractExpressionIterator extends ExpressionElementIterat
 	@Override
 	public boolean hasNext() {
 		switch (this.state) {
-			case LEFT_OPERAND: this.leftOperandIterator.hasNext();
-			case RIGHT_OPERAND: this.rightOperandIterator.hasNext();
+			case LEFT_OPERAND: return this.leftOperandIterator.hasNext();
+			case RIGHT_OPERAND: return this.rightOperandIterator.hasNext();
 			default: return ! state.equals(this.transitions.last());
 		}
 	}
 
 	@Override
 	protected ExpressionElement safeNext() {
-		ExpressionElement result;
 		switch (this.state) {
-			case OPENING_BRACKET: result = new OpenBracketOperation(); break; 
-			case LEFT_OPERAND: result = this.leftOperandIterator.next();
-			case SELF: result = this.binaryOperator.getExpressionElement(); break;
-			case RIGHT_OPERAND: result = this.leftOperandIterator.next();
-			case CLOSING_BRACKET: result = new CloseBracketOperation(); break;
+			case OPENING_BRACKET: {
+				transition(); 
+				return new OpenBracketOperation(); 
+			}
+			case LEFT_OPERAND: {
+				ExpressionElement result = this.leftOperandIterator.next();
+				if (! this.leftOperandIterator.hasNext()) {
+					transition();
+				}
+				return result;
+			}
+			case SELF: {
+				transition();
+				return this.binaryOperator.getExpressionElement();
+			}
+			case RIGHT_OPERAND: {
+				ExpressionElement result = this.rightOperandIterator.next();
+				if (! this.rightOperandIterator.hasNext()) {
+					transition();
+				}
+				return result;
+			}
+			case CLOSING_BRACKET: {
+				transition();
+				return new CloseBracketOperation();
+			}
 			default: throw new IllegalStateException("Unreachable state.");
 		}
+	}
+	
+	private void transition() {
 		this.state = this.transitions.next(this.state);
-		return result;
 	}
 	
 	protected abstract Iterator<ExpressionElement> getNestedIterator(ArithmeticExpression iteratorSource);
