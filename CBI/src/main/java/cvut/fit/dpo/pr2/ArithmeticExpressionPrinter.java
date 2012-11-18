@@ -31,7 +31,8 @@ public class ArithmeticExpressionPrinter {
 	 * @return String in classical "inOrder" format.
 	 */
 	public String printInOrder() {
-		return print(expression.getInOrderIterator());
+		boolean spaces = false;
+		return print(expression.getInOrderIterator(), spaces);
 	}
 
 	/**
@@ -43,13 +44,17 @@ public class ArithmeticExpressionPrinter {
 	 * @return string in "postOrder" (RPN) format.
 	 */
 	public String printPostOrder() {
-		return print(expression.getPostOrderIterator());
+		boolean spaces = true;
+		return print(expression.getPostOrderIterator(), spaces);
 	}
 	
-	private String print(Iterator<ExpressionElement> iterator) { 
+	private String print(Iterator<ExpressionElement> iterator, boolean spaces) { 
 		StringBuilder sb = new StringBuilder();
 		while (iterator.hasNext()) {
-			sb.append(iterator.next());
+			sb.append(iterator.next().stringValue());
+			if (spaces && iterator.hasNext()) {
+				sb.append(" ");
+			}
 		}
 		return sb.toString();
 	}

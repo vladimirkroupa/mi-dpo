@@ -1,5 +1,10 @@
 package cvut.fit.dpo.pr2;
 
+import java.util.ArrayDeque;
+import java.util.Deque;
+import java.util.Queue;
+import java.util.regex.Pattern;
+
 import cvut.fit.dpo.arithmetic.AddOperator;
 import cvut.fit.dpo.arithmetic.ArithmeticExpression;
 import cvut.fit.dpo.arithmetic.BinaryOperator;
@@ -63,6 +68,56 @@ public class ArithmeticExpressionCreator
 	public ArithmeticExpression createExpressionFromRPN(String input)
 	{
 		// Good entry point for Builder :)
-		throw new UnsupportedOperationException("Don't know how to do it :(");
+		return new RPNParser().parse(input);
 	}
+}
+
+class RPNParser {
+	
+	public ArithmeticExpression parse(String rpnInput) {
+		Queue<Character> unprocessed = new ArrayDeque<>();
+		for (int charI = 0; charI < rpnInput.length(); charI++) {
+			char c = rpnInput.charAt(charI);
+			if (c == ' ') {
+				continue;
+			}
+			unprocessed.offer(c);
+		}
+		
+		Deque<ArithmeticExpression> workStack = new ArrayDeque<>();
+
+		while (! unprocessed.isEmpty()) {
+			Character c = unprocessed.poll();
+			String s = c.toString();
+			if (isNumericOperand(s)) {
+				Integer value = Integer.parseInt(s);  
+				workStack.push(new NumericOperand(value));
+			} else if (isBinaryOperator(s)) {
+				ArithmeticExpression leftOperand = workStack.pop();
+				ArithmeticExpression rightOperand = workStack.pop();
+				ArithmeticExpression binary;
+				if (c.equals('+')) {
+					binary = new AddOperator(leftOperand, rightOperand);
+				} else if (c.equals('-')) {
+					binary = new SubtractOperator(leftOperand, rightOperand);
+				} else {
+					throw new IllegalArgumentException("Unknown binary operator");
+				}
+				workStack.push(binary);
+			}
+		}
+		
+		return workStack.pop();
+	}
+	
+	private boolean isBinaryOperator(String s) {
+		final String REGEXP = "[+-]";
+		return Pattern.matches(REGEXP, s);
+	}
+	
+	private boolean isNumericOperand(String s) {
+		final String REGEXP = "\\d";
+		return Pattern.matches(REGEXP, s);
+	}
+	
 }
