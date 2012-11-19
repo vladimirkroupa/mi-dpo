@@ -75,6 +75,10 @@ public class ArithmeticExpressionCreator
 class RPNParser {
 	
 	public ArithmeticExpression parse(String rpnInput) {
+		if (rpnInput.trim().isEmpty()) {
+			throw new IllegalArgumentException("Empty expression.");
+		}
+		
 		Queue<Character> unprocessed = new ArrayDeque<>();
 		for (int charI = 0; charI < rpnInput.length(); charI++) {
 			char c = rpnInput.charAt(charI);
@@ -101,9 +105,11 @@ class RPNParser {
 				} else if (c.equals('-')) {
 					binary = new SubtractOperator(leftOperand, rightOperand);
 				} else {
-					throw new IllegalArgumentException("Unknown binary operator");
+					throw new IllegalArgumentException("Unknown binary operator.");
 				}
 				workStack.push(binary);
+			} else {
+				throw new IllegalArgumentException("Unknown operator.");
 			}
 		}
 		
