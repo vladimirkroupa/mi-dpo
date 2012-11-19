@@ -93,8 +93,8 @@ class RPNParser {
 				Integer value = Integer.parseInt(s);  
 				workStack.push(new NumericOperand(value));
 			} else if (isBinaryOperator(s)) {
-				ArithmeticExpression leftOperand = workStack.pop();
 				ArithmeticExpression rightOperand = workStack.pop();
+				ArithmeticExpression leftOperand = workStack.pop();
 				ArithmeticExpression binary;
 				if (c.equals('+')) {
 					binary = new AddOperator(leftOperand, rightOperand);
