@@ -4,7 +4,7 @@ import java.util.Iterator;
 
 import cvut.fit.dpo.arithmetic.elements.ExpressionElement;
 import cvut.fit.dpo.arithmetic.elements.Number;
-import cvut.fit.dpo.arithmetic.iterator.ExpressionElementIteratorBase;
+import cvut.fit.dpo.arithmetic.iterator.NoRemoveIterator;
 
 /**
  * Represents number in the arithmetic expression
@@ -39,7 +39,7 @@ public class NumericOperand implements ArithmeticExpression {
 		return new SingleElementIterator();
 	}
 	
-	class SingleElementIterator extends ExpressionElementIteratorBase {
+	class SingleElementIterator extends NoRemoveIterator<ExpressionElement> {
 
 		private boolean done = false;
 		
