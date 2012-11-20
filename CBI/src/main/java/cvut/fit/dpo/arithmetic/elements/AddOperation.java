@@ -1,7 +1,7 @@
 package cvut.fit.dpo.arithmetic.elements;
 
 
-public class AddOperation implements ExpressionElement
+public class AddOperation extends ExpressionElement
 {
 	@Override
 	public String stringValue()

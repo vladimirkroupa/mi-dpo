@@ -1,7 +1,7 @@
 package cvut.fit.dpo.arithmetic.elements;
 
 
-public class CloseBracketOperation implements ExpressionElement
+public class CloseBracketOperation extends ExpressionElement
 {
 
 	@Override

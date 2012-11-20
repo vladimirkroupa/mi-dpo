@@ -1,9 +1,9 @@
 package cvut.fit.dpo.arithmetic.elements;
 
 
-public class Number implements ExpressionElement
+public class Number extends ExpressionElement
 {
-	private Integer value;
+	public final Integer value;
 	
 	public Number(Integer value)
 	{

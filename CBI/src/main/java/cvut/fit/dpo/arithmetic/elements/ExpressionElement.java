@@ -1,6 +1,12 @@
 package cvut.fit.dpo.arithmetic.elements;
 
-public interface ExpressionElement
+public abstract class ExpressionElement
 {
-	public String stringValue();
+	public abstract String stringValue();
+
+	@Override
+	public String toString() {
+		return stringValue();
+	}
+	
 }

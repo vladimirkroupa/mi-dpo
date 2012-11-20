@@ -1,6 +1,6 @@
 package cvut.fit.dpo.arithmetic.elements;
 
-public class SubtractOperation implements ExpressionElement
+public class SubtractOperation extends ExpressionElement
 {
 	@Override
 	public String stringValue()
