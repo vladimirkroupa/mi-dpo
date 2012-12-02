@@ -4,7 +4,9 @@ bin/
 .settings/
 .gradle/
 .project
+.idea
 .classpath
+__pycache__
 
 # Package Files #
 *.jar
