@@ -24,10 +24,16 @@ class Model(ShapeObservable):
         id = randint(0, 10000000)
         square = Shape(id, x, y, size, 'square')
         self.squares[id] = square
-        self.notifyObservers(square)
+        self.notifyShapeEvent(square)
 
     def createCircle(self, x, y, size=10):
         id = randint(0, 10000000)
         circle = Shape(id, x, y, size, 'circle')
         self.circles[id] = circle
-        self.notifyObservers(circle)
+        self.notifyShapeEvent(circle)
+
+    def removeAll(self):
+        for shape in self.circles.itervalues():
+            self.notifyShapeDelete(shape.id)
+        for shape in self.squares.itervalues():
+            self.notifyShapeDelete(shape.id)

@@ -1,4 +1,4 @@
-class Controller:
+class CanvasController:
 
     def __init__(self, model):
         self.model = model
@@ -8,8 +8,17 @@ class Controller:
 
     def onLeftClick(self, event):
         x, y = self.eventPosition(event)
-        model_id = self.model.createCircle(x, y)
+        self.model.createCircle(x, y)
 
     def onRightClick(self, event):
         x, y = self.eventPosition(event)
-        model_id = self.model.createSquare(x, y)
+        self.model.createSquare(x, y)
+
+
+class ButtonController:
+
+    def __init__(self, model):
+        self.model = model
+
+    def onDeleteAllClick(self):
+        self.model.removeAll()

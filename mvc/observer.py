@@ -3,6 +3,9 @@ class ShapeObserver:
     def onShapeEvent(self, shape):
         pass
 
+    def onShapeDelete(self, shape_id):
+        pass
+
 class ShapeObservable:
 
     def __init__(self):
@@ -14,6 +17,10 @@ class ShapeObservable:
     def deregisterObserver(self, observer):
         self._observers.remove(observer)
 
-    def notifyObservers(self, shape):
+    def notifyShapeEvent(self, shape):
         for observer in self._observers:
             observer.onShapeEvent(shape)
+
+    def notifyShapeDelete(self, shape_id):
+        for observer in self._observers:
+            observer.onShapeDelete(shape_id)
