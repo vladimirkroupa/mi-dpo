@@ -32,6 +32,9 @@ class Model(ShapeObservable):
         self.circles[id] = circle
         self.notifyShapeEvent(circle)
 
+    def updateX(self, shape_id, new_value):
+        #shape = self.circles.get(shape_id)
+
     def removeAll(self):
         for shape in self.circles.itervalues():
             self.notifyShapeDelete(shape.id)

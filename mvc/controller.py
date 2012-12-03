@@ -15,6 +15,18 @@ class CanvasController:
         self.model.createSquare(x, y)
 
 
+class TableController:
+
+    def __init__(self, model):
+        self.model = model
+
+    def onXChanged(self, shape_id, new_value):
+        self.model
+
+    def onYChanged(self, shape_id, new_value):
+
+    def onSizeChanged(self, shape_id, new_value):
+
 class ButtonController:
 
     def __init__(self, model):

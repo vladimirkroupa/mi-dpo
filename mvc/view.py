@@ -11,18 +11,12 @@ class CanvasView(Frame, ShapeObserver):
 
         self.shapes = {}
         self.register(model)
-        self.setController(controller)
+        self.bindController(controller)
 
     def register(self, model):
         model.registerObserver(self)
 
-    def setController(self, controller):
-        self.counter = 0
-        def filter(function):
-            if self.counter % 5 == 0:
-                function()
-            self.counter += 1
-
+    def bindController(self, controller):
         self.canvas.bind('<ButtonPress-1>', controller.onLeftClick)
         self.canvas.bind('<ButtonPress-3>', controller.onRightClick)
         self.canvas.bind('<B1-Motion>', controller.onLeftClick)
@@ -59,17 +53,19 @@ class CanvasView(Frame, ShapeObserver):
 
 class TableView(Frame, ShapeObserver):
 
-    def __init__(self, model, shape_type, parent=None):
+    def __init__(self, model, controller, shape_type, parent=None):
         Frame.__init__(self, parent)
         self.sf = Pmw.ScrolledFrame(parent, vscrollmode='static')
         self.sf.pack()
         self.rows = 0
+        self.controller = controller
 
         self.shape_type = shape_type
         self.row_mapping = {}
         self.register(model)
 
         self.addHeader()
+
 
     def addHeader(self):
         id_header = Label(self.sf.interior(), text='id', width=10, bg='gray96')
@@ -86,24 +82,22 @@ class TableView(Frame, ShapeObserver):
 
         self.rows += 1
 
+    def addEntry(self, text, shape_id, col):
+        str_var = StringVar(value=text)
+        entry = Entry(self.sf.interior(), textvariable=str_var, width=10)
+        entry.grid(row=self.rows, column=col)
+        entry.bind('<Return>', lambda event, shape_id = shape_id: self.controller.onEntryChanged(shape_id, entry.get()))
+        return entry
+
     def addShape(self, shape):
         id = Label(self.sf.interior(), text='%s' % shape.id, width=10, bg='white')
         id.grid(row=self.rows, column=0)
 
-        x = Entry(self.sf.interior(), width=10)
-        x.insert(0, shape.x)
-        x.grid(row=self.rows, column=1)
-
-        y = Entry(self.sf.interior(), width=10)
-        y.insert(0, shape.y)
-        y.grid(row=self.rows, column=2)
-
-        size = Entry(self.sf.interior(), width=10)
-        size.insert(0, shape.size)
-        size.grid(row=self.rows, column=3)
+        x = self.addEntry(shape.x, shape.id, 1)
+        y = self.addEntry(shape.y, shape.id, 2)
+        size = self.addEntry(shape.size, shape.id, 3)
 
         row = (id, x, y, size)
-
         self.row_mapping[shape.id] = row
         self.rows += 1
 
