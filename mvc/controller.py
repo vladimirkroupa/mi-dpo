@@ -21,11 +21,13 @@ class TableController:
         self.model = model
 
     def onXChanged(self, shape_id, new_value):
-        self.model
+        self.model.updateX(shape_id, new_value)
 
     def onYChanged(self, shape_id, new_value):
+        self.model.updateY(shape_id, new_value)
 
     def onSizeChanged(self, shape_id, new_value):
+        self.model.updateSize(shape_id, new_value)
 
 class ButtonController:
 

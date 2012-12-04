@@ -13,6 +13,9 @@ class Shape:
     def distanceFrom(self, shape):
         return self.x - shape.x, self.y - shape.y
 
+    def __hash__(self):
+        return id
+
 class Model(ShapeObservable):
 
     def __init__(self):
@@ -24,19 +27,37 @@ class Model(ShapeObservable):
         id = randint(0, 10000000)
         square = Shape(id, x, y, size, 'square')
         self.squares[id] = square
-        self.notifyShapeEvent(square)
+        self.notifyShapeCreated(square)
 
     def createCircle(self, x, y, size=10):
         id = randint(0, 10000000)
         circle = Shape(id, x, y, size, 'circle')
         self.circles[id] = circle
-        self.notifyShapeEvent(circle)
+        self.notifyShapeCreated(circle)
 
     def updateX(self, shape_id, new_value):
-        #shape = self.circles.get(shape_id)
+        shape = self._getShape(shape_id)
+        shape.x = new_value
+        self.notifyShapeMoved(shape)
+
+    def updateY(self, shape_id, new_value):
+        shape = self._getShape(shape_id)
+        shape.y = new_value
+        self.notifyShapeMoved(shape)
+
+    def updateSize(self, shape_id, new_value):
+        shape = self._getShape(shape_id)
+        shape.size = new_value
+        self.notifyShapeResized(shape)
+
+    def _getShape(self, shape_id):
+        shape = self.circles.get(shape_id)
+        if shape == None:
+            shape = self.squares.get(shape_id)
+        return shape
 
     def removeAll(self):
         for shape in self.circles.itervalues():
-            self.notifyShapeDelete(shape.id)
+            self.notifyShapeDeleted(shape.id)
         for shape in self.squares.itervalues():
-            self.notifyShapeDelete(shape.id)
+            self.notifyShapeDeleted(shape.id)

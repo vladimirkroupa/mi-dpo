@@ -1,6 +1,7 @@
 from observer import ShapeObserver
 from Tkinter import *
 import Pmw
+from model import Shape
 
 class CanvasView(Frame, ShapeObserver):
 
@@ -37,17 +38,25 @@ class CanvasView(Frame, ShapeObserver):
             raise ValueError('Uknown shape ', shape.type)
         self.shapes[shape.id] = obj_id
 
-    def moveShape(self, shape):
-        obj_id = self.shapes[shape.id]
-        self.canvas.coords(obj_id, [shape.x, shape.y])
+    def onShapeCreated(self, shape):
+        self.drawShape(shape)
 
-    def onShapeEvent(self, shape):
-        if shape.id in self.shapes:
-            self.moveShape(shape)
-        else:
-            self.drawShape(shape)
+    def onShapeMoved(self, shape_id, new_x, new_y):
+        obj_id = self.shapes[shape_id]
+        old_coords = self.canvas.coords(obj_id)
+        old_x = old_coords[0]
+        old_y = old_coords[1]
+        self.canvas.move(obj_id, new_x - old_x, new_y - old_y)
 
-    def onShapeDelete(self, shape_id):
+    def onShapeResized(self, shape_id, new_size):
+        obj_id = self.shapes.pop(shape_id)
+        coords = self.canvas.coords(obj_id)
+
+        #TODO: use canvas.scale !
+        self.canvas.delete(obj_id)
+        self.drawShape(Shape(shape_id, coords[0], coords[1], new_size, 'circle'))
+
+    def onShapeDeleted(self, shape_id):
         obj_id = self.shapes[shape_id]
         self.canvas.delete(obj_id)
 
@@ -86,7 +95,6 @@ class TableView(Frame, ShapeObserver):
         str_var = StringVar(value=text)
         entry = Entry(self.sf.interior(), textvariable=str_var, width=10)
         entry.grid(row=self.rows, column=col)
-        entry.bind('<Return>', lambda event, shape_id = shape_id: self.controller.onEntryChanged(shape_id, entry.get()))
         return entry
 
     def addShape(self, shape):
@@ -94,8 +102,11 @@ class TableView(Frame, ShapeObserver):
         id.grid(row=self.rows, column=0)
 
         x = self.addEntry(shape.x, shape.id, 1)
+        x.bind('<Return>', lambda event, shape_id = shape.id: self.controller.onXChanged(shape_id, int(x.get())))
         y = self.addEntry(shape.y, shape.id, 2)
+        y.bind('<Return>', lambda event, shape_id = shape.id: self.controller.onYChanged(shape_id, int(y.get())))
         size = self.addEntry(shape.size, shape.id, 3)
+        size.bind('<Return>', lambda event, shape_id = shape.id: self.controller.onSizeChanged(shape_id, int(size.get())))
 
         row = (id, x, y, size)
         self.row_mapping[shape.id] = row
@@ -104,17 +115,34 @@ class TableView(Frame, ShapeObserver):
     def register(self, model):
         model.registerObserver(self)
 
-    def onShapeEvent(self, shape):
+    def onShapeCreated(self, shape):
         if shape.type == self.shape_type:
             self.addShape(shape)
 
-    def onShapeDelete(self, shape_id):
+    def onShapeMoved(self, shape_id, new_x, new_y):
+        row = self.row_mapping.pop(shape_id, None)
+        if row:
+            x_label = row[1]
+            x_label.delete(0, END)
+            x_label.insert(0, new_x)
+
+            y_label = row[2]
+            y_label.delete(0, END)
+            y_label.insert(0, new_y)
+
+    def onShapeResized(self, shape_id, new_size):
+        row = self.row_mapping.pop(shape_id, None)
+        if row:
+            size_label = row[3]
+            size_label.delete(0, END)
+            size_label.insert(0, new_size)
+
+    def onShapeDeleted(self, shape_id):
         row = self.row_mapping.pop(shape_id, None)
         if row:
             for item in row:
                 item.grid_forget()
                 item.destroy()
-
 
 class ClearAllButtonView(Frame):
 
